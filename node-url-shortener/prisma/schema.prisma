@@ -9,23 +9,20 @@ datasource db {
 }
 
 model shortlink {
-  ShortUrl                                   String  @id @unique(map: "ShortUrl") @db.VarChar(16)
-  OriginalUrl                                String? @db.VarChar(500)
-  fk_UserID                                  Int?
-  user_shortlink_fk_UserIDTouser             user?   @relation("shortlink_fk_UserIDTouser", fields: [fk_UserID], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "FK_ShortLink_2")
-  user_user_fk_ShortLink_ShortUrlToshortlink user[]  @relation("user_fk_ShortLink_ShortUrlToshortlink")
+  ID          Int     @id @default(autoincrement())
+  ShortUrl    String @db.VarChar(16)
+  OriginalUrl String @db.VarChar(500)
+  fk_UserID   Int
 
-  @@index([fk_UserID], map: "FK_ShortLink_2")
+  @@unique([ShortUrl, ID], map: "ShortUrl")
 }
 
 model user {
-  ID                                              Int         @id @unique(map: "ID")
-  Name                                            String?     @db.VarChar(60)
-  Email                                           String?     @db.VarChar(60)
-  CreationDate                                    DateTime?   @db.Date
-  fk_ShortLink_ShortUrl                           String?     @db.VarChar(16)
-  shortlink_shortlink_fk_UserIDTouser             shortlink[] @relation("shortlink_fk_UserIDTouser")
-  shortlink_user_fk_ShortLink_ShortUrlToshortlink shortlink?  @relation("user_fk_ShortLink_ShortUrlToshortlink", fields: [fk_ShortLink_ShortUrl], references: [ShortUrl], onDelete: Cascade, onUpdate: NoAction, map: "FK_User_2")
+  ID            Int       @id @default(autoincrement())
+  Name          String?   @db.VarChar(60)
+  Email         String?   @db.VarChar(60)
+  CreationDate  DateTime? @db.Date
+  fk_id_ShortID Int?
 
-  @@index([fk_ShortLink_ShortUrl], map: "FK_User_2")
+  @@unique([ID, fk_id_ShortID], map: "ID")
 }
