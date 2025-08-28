@@ -1,3 +1,5 @@
+//tech 1
+
 const numCharsShortUrl = 7;
 const alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 const random = Math.random;
@@ -16,3 +18,7 @@ export async function generateShortUrl() {
     }
   }
 }
+
+
+//tech 3
+
