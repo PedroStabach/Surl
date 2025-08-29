@@ -1,7 +1,7 @@
 import {Router, Request, Response} from "express";
 import prisma from "../prisma/prisma";
+import {generateRandomShortUrl} from '../shortnerLink/transformerBase';
 const router = Router();
-
 
 //CRUD USER
 router.post("/users", async (req: Request, res: Response) => {
@@ -48,7 +48,7 @@ router.get("/user/:id", async (req: Request, res: Response) => {
 router.put('/user/:id', (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
-    const {Name, Email, Password} = req.body;
+    const {Name, Email} = req.body;
     const user = prisma.user.update({
       where: {ID:id},
       data: {
@@ -85,20 +85,21 @@ router.delete('/user/:id', async (req: Request, res: Response) => {
 
 
 //CRUD link
-router.post('/link',(req: Request, res: Response) => {
+router.post('/link',async (req: Request, res: Response) => {
   try {
     const {OriginalUrl, user} = req.body;
-    const ShortUrl = "ARRUMAR";
-    const url = prisma.shortlink.create({
+    const ShortUrl = await generateRandomShortUrl(OriginalUrl);
+    const url = await prisma.shortlink.create({
       data: {
         OriginalUrl,
         user,
-        ShortUrl
+        ShortUrl,
+        fk_UserID: user
       }
     });
-    return user
+    return url
   } catch (error) {
-
+    res.status(500).json({erro : "nao foi possivel criar o link"})
   }
 });
 
