@@ -26,4 +26,5 @@ router.get('/users', async (req: Request, res: Response) => {
         res.status(500).json({erro: "Erro ao criar usuario"});
     }
 });
+
 export default router;
