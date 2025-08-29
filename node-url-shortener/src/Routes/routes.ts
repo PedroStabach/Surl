@@ -15,7 +15,6 @@ router.post("/users", async (req: Request, res: Response) => {
     res.status(500).json({ error: "Erro ao criar usuário" });
   }
 });
-
 router.get('/users', async (req: Request, res: Response) => {
     try {
         const users = await prisma.user.findMany();
@@ -46,7 +45,22 @@ router.get("/user/:id", async (req: Request, res: Response) => {
     res.status(500).json({ erro: "Erro interno no servidor" });
   }
 });
+router.put('/user/:id', (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+    const {Name, Email, Password} = req.body;
+    const user = prisma.user.update({
+      where: {ID:id},
+      data: {
+        Name,
+        Email
+      }
+    });
+    return res.json(user);
+  } catch (error) {
 
+  }
+});
 router.delete('/user/:id', async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id, 10);
@@ -66,6 +80,25 @@ router.delete('/user/:id', async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Erro ao buscar usuário:", error);
     res.status(500).json({ erro: "Erro interno no servidor" });
+  }
+});
+
+
+//CRUD link
+router.post('/link',(req: Request, res: Response) => {
+  try {
+    const {OriginalUrl, user} = req.body;
+    const ShortUrl = "ARRUMAR";
+    const url = prisma.shortlink.create({
+      data: {
+        OriginalUrl,
+        user,
+        ShortUrl
+      }
+    });
+    return user
+  } catch (error) {
+
   }
 });
 

@@ -19,8 +19,8 @@ model shortlink {
 
 model user {
   ID           Int         @id @default(autoincrement())
-  Name         String?     @db.VarChar(60)
-  Email        String?     @unique(map: "Email") @db.VarChar(60)
+  Name         String      @db.VarChar(60)
+  Email        String      @unique(map: "Email") @db.VarChar(60)
   CreationDate DateTime?   @db.Date
   shortlink    shortlink[]
 }
