@@ -2,11 +2,15 @@ import {Router, Request, Response} from "express";
 import prisma from "../prisma/prisma";
 const router = Router();
 
+router.get("/", (req: Request, res: Response) => {
+    res.send("API is running");
+});
+
 router.post("/users", async (req: Request, res: Response) => {
   try {
-    const { name, email } = req.body;
+    const { Name, Email } = req.body;
     const user = await prisma.user.create({
-      data: { name, email, creationDate: new Date() },
+      data: { Name, Email, CreationDate: new Date() },
     });
     res.json(user);
   } catch (error) {
@@ -14,9 +18,10 @@ router.post("/users", async (req: Request, res: Response) => {
   }
 });
 
-router.get('/users', (req: Request, res: Response) => {
+router.get('/users', async (req: Request, res: Response) => {
     try {
-
+        const users = await prisma.user.findMany();
+        res.json(users);
     } catch (error) {
         res.status(500).json({erro: "Erro ao criar usuario"});
     }

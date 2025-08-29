@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -10,19 +9,18 @@ datasource db {
 
 model shortlink {
   ID          Int     @id @default(autoincrement())
-  ShortUrl    String? @db.VarChar(16)
+  ShortUrl    String? @unique(map: "ShortUrl") @db.VarChar(16)
   OriginalUrl String? @db.VarChar(500)
   fk_UserID   Int?
+  user        user?   @relation(fields: [fk_UserID], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "shortlink_ibfk_1")
 
-  @@unique([ShortUrl, ID], map: "ShortUrl")
+  @@index([fk_UserID], map: "fk_UserID")
 }
 
 model user {
-  ID            Int       @id @default(autoincrement())
-  Name          String?   @db.VarChar(60)
-  Email         String?   @db.VarChar(60)
-  CreationDate  DateTime? @db.Date
-  fk_id_ShortID Int?
-
-  @@unique([ID, fk_id_ShortID], map: "ID")
+  ID           Int         @id @default(autoincrement())
+  Name         String?     @db.VarChar(60)
+  Email        String?     @unique(map: "Email") @db.VarChar(60)
+  CreationDate DateTime?   @db.Date
+  shortlink    shortlink[]
 }

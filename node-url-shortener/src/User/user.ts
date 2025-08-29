@@ -1,19 +1,19 @@
 import prisma from "../prisma/prisma";
 
-async function create (nome: string, email: string) {
+async function create (Name: string, Email: string) {
     const user = await prisma.user.create({
         data: {
-            nome,
-            email,
-            creationDate: new Date()
+            Name,
+            Email,
+            CreationDate: new Date()
         }
     });
     return user;
 }
 
-async function findFirst(id:number) {
-    const user = await prisma.user.email.findUnique({
-        where: {id}
+async function findFirst(ID:number) {
+    const user = await prisma.user.findUnique({
+        where: {ID}
     })
     return user;
 }
@@ -22,9 +22,9 @@ async function findAll() {
     return users;
 }
 
-async function deleteUser (id:number) {
+async function deleteUser (ID:number) {
     const user = await prisma.user.delete({
-        where: {id}
+        where: {ID}
     })
     return user;
 }
