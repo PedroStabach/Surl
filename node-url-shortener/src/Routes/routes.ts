@@ -87,18 +87,18 @@ router.delete('/user/:id', async (req: Request, res: Response) => {
 //CRUD link
 router.post('/link',async (req: Request, res: Response) => {
   try {
-    const {OriginalUrl, user} = req.body;
+    const {OriginalUrl,fk_UserID} = req.body;
     const ShortUrl = await generateRandomShortUrl(OriginalUrl);
     const url = await prisma.shortlink.create({
       data: {
         OriginalUrl,
-        user,
         ShortUrl,
-        fk_UserID: user
+        fk_UserID: parseInt(fk_UserID)
       }
     });
-    return url
+    return res.json(url);
   } catch (error) {
+    console.error(error);
     res.status(500).json({erro : "nao foi possivel criar o link"})
   }
 });
