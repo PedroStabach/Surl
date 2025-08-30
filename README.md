@@ -47,4 +47,4 @@ Otimizar a lógica de encurtamento para alta escala.
 
 Contato ✉️
 
-Pedro – https://linkedin/in/pedroStbk
+Pedro – [linkedin](https://www.linkedin.com/in/pedrostbk)
