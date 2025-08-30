@@ -43,16 +43,15 @@ userRoutes.get('/user/:id', async (req: Request, res: Response) => {
     res.status(500).json({ erro: "Erro interno no servidor" });
   }
 });
-userRoutes.put('/user/:id', (req: Request, res: Response) => {
+userRoutes.put('/user/:ID', async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id);
-    const {Name, Email} = req.body;
-    const user = prisma.user.update({
-      where: {ID:id},
+    const ID = parseInt(req.params.ID);
+    const {Name} = req.body;
+    const user = await prisma.user.update({
+      where: {ID},
       data: {
-        Name,
-        Email
-      }
+        Name
+    }
     });
     return res.json(user);
   } catch (error) {
@@ -65,15 +64,12 @@ userRoutes.delete('/user/:id', async (req: Request, res: Response) => {
     if (isNaN(id)) {
       return res.status(400).json({ erro: "ID inválido" });
     }
-
+    await prisma.shortlink.deleteMany({
+        where: {fk_UserID: id}
+    })
     const user = await prisma.user.delete({
       where: { ID: id },
     });
-
-    if (!user) {
-      return res.status(404).json({ erro: "Usuário não encontrado" });
-    }
-
     res.json(user);
   } catch (error) {
     console.error("Erro ao buscar usuário:", error);
