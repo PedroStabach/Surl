@@ -29,7 +29,7 @@ linkRouter.get('/link', async (req: Request, res: Response) => {
       return res.status(500).json({erro : "nao foi possivel encontrar os links"})
     } 
 });
-linkRouter.get('/surl/:shortCode', async (req: Request, res:Response) => {
+linkRouter.get('/:shortCode', async (req: Request, res:Response) => {
   try {
     const shortCode = (req.params.shortCode);
     const surl = await prisma.shortlink.findFirst({
