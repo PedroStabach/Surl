@@ -1,4 +1,4 @@
-import {Router, Request, Response} from "express";
+import {Router, Request, Response, response} from "express";
 import prisma from "../prisma/prisma";
 import {generateRandomShortUrl} from '../shortnerLink/shortnerLink';
 
@@ -43,5 +43,18 @@ linkRouter.get('/:shortCode', async (req: Request, res:Response) => {
     return res.status(500).json({erro : "nao foi possivel encontrar o link"});
   }
 });
-
+linkRouter.delete('/:shortCode', async (req : Request, res : Response) => {
+  try {
+    const shortCode = req.params.shortCode;
+    if (!(shortCode)) {
+      return res.status(400).json({ erro: "ID inválido" });
+    }
+    const link = await prisma.shortlink.delete({
+      where : {ShortUrl : shortCode}
+    })
+    return res.json(link);
+  } catch (e) {
+    return res.status(500).json({erro : "nao foi possivel apagar o link"});
+  }
+});
 export default linkRouter;
