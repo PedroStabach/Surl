@@ -10,8 +10,8 @@ export default function() {
     const res = http.del('http://localhost:3000/surl/user/11');
 
     deleteCustomer.add(res.timings.duration);
-    deleteCustomerFail.add(res === 0 || res > 399);
-    deleteCustomerSucess.add(res < 399);
+    deleteCustomerFail.add(res.status === 0 || res.status > 399);
+    deleteCustomerSucess.add(res.status < 399);
 
     let durationMsg = 'MaxDuration $(1000/1000)'
     if(!check(res, {
