@@ -9,8 +9,10 @@ export let setCustomerRate = new Rate('post_customer_reqs');
 
 export default function () {
     const payload = JSON.stringify({
-        
-    })
+        Name: "Pedro",
+        Email: "Pedro@pedro"
+    });
+    const params = {headers: {'Content-Type' : 'application/json'}};
 
     let res = http.post('http://localhost:3000/surl/users', payload, params);
 
