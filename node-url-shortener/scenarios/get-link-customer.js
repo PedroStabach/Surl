@@ -8,7 +8,8 @@ export let GetCustomerSucess = new Rate('get_customer_sucess_rate');
 export let GetCostumerReqs = new Rate('get_customer_reqs');
 
 export default function () {
-    let res = http.get('http://localhost:3000/surl:shortCode');
+    const shortcode = 'ba37f79';
+    let res = http.get(`http://localhost:3000/surl/${shortcode}`);
 
     GetCustomerDuration.add(res.timings.duration);
     GetCustomerFailed.add(res.status === 0 || res.status > 399);
