@@ -3,7 +3,7 @@ import { Login } from '../login';
 import { MenuItem } from '../menu-itens';
 import styles from  './styles.module.css';
 import { FiSettings } from "react-icons/fi";
-
+import { Bandeiras } from '../bandeiras';
 export function Header () {
     return (
         <div className={styles.header}>
@@ -14,7 +14,7 @@ export function Header () {
             </Menu>
             <Menu>
                 <MenuItem><FiSettings size={20} /></MenuItem>
-                <MenuItem>🏳️‍🌈</MenuItem>
+                <MenuItem><Bandeiras /></MenuItem>
                 <MenuItem><Login /></MenuItem>
             </Menu>
         </div>
