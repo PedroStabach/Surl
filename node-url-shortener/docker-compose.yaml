@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  k6:
+    image: loadimpact/k6:latest
+    container_name: k6_test
+    volumes:
+      - ./:/src  # monta seu projeto dentro do container
+    working_dir: /src
+    command: >
+      run src/service/index.js
+      --vus 20
+      --duration 120s
