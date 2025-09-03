@@ -2,6 +2,7 @@ import { Menu } from '../menu';
 import { Login } from '../login';
 import { MenuItem } from '../menu-itens';
 import styles from  './styles.module.css';
+import { FiSettings } from "react-icons/fi";
 
 export function Header () {
     return (
@@ -12,9 +13,9 @@ export function Header () {
                 <MenuItem>Como funciona?</MenuItem>
             </Menu>
             <Menu>
-                <MenuItem>configuracoes</MenuItem>
-                <MenuItem>idioma</MenuItem>
-                <MenuItem><Login /> </MenuItem>
+                <MenuItem><FiSettings size={20} /></MenuItem>
+                <MenuItem>🏳️‍🌈</MenuItem>
+                <MenuItem><Login /></MenuItem>
             </Menu>
         </div>
     )

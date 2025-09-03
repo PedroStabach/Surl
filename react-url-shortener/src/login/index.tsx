@@ -1,12 +1,11 @@
+import { FaUserCircle} from "react-icons/fa";
 import styles from './styles.module.css';
 
-const loged = false; // arrumar
+const loged = true; // arrumar
 export function Login () {
     if(loged) {
         return (
-            <h1>
-                voce esta logado
-            </h1>
+            <FaUserCircle size={35}/>
         )
 
     } else {

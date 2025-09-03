@@ -1,9 +1,11 @@
 import './App.css';
 import { Header } from './header';
+import { Footer } from './footer';
 function App() {
   return (
     <>
-      <Header></Header>
+      <Header />
+      <Footer />
     </>
   )
 }
