@@ -2,7 +2,12 @@
     color: aliceblue;
     width: 130px;
     text-align: center;
-    background-color: green;
-    padding: 8px;
-    border-radius: 16px;
+    background-color: #5e3bbf;
+    padding: 10px;
+    border-radius: 20px;
+}
+.login:hover {
+    color: #5e3bbf;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #5e3bbf ;
 }

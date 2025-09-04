@@ -1,7 +1,7 @@
 import { FaUserCircle} from "react-icons/fa";
 import styles from './styles.module.css';
 
-const loged = true; // arrumar
+const loged = false; // arrumar
 export function Login () {
     if(loged) {
         return (

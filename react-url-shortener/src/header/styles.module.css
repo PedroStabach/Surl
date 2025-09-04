@@ -6,4 +6,11 @@
     align-items:center;
     height: 10vh;
     width: 100%;
+    background-color: #fff;
+}
+.logo img {
+    height: 10vh;
+}
+a:hover {
+    color: rgb(107, 132, 132);
 }

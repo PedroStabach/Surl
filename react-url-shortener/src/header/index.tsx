@@ -4,13 +4,14 @@ import { MenuItem } from '../menu-itens';
 import styles from  './styles.module.css';
 import { FiSettings } from "react-icons/fi";
 import { Bandeiras } from '../bandeiras';
+import logoImg from '../images/surl-icon.png'
 export function Header () {
     return (
         <div className={styles.header}>
             <Menu>
-                <MenuItem><div className={styles.logo}><img src="" alt="" /></div></MenuItem>
-                <MenuItem>Seus links</MenuItem>
-                <MenuItem>Como funciona?</MenuItem>
+                <MenuItem><div className={styles.logo}><img src={logoImg} alt="logo" /></div></MenuItem>
+                <MenuItem><a href="">Seus Links</a></MenuItem>
+                <MenuItem><a href="">Como funciona</a></MenuItem>
             </Menu>
             <Menu>
                 <MenuItem><FiSettings size={20} /></MenuItem>
