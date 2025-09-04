@@ -3,3 +3,11 @@
     margin-left: 20px;
     margin-right: 20px;
 }
+
+.MenuItem:hover {
+    transform: translateY(-10px);
+    transition: transform .5s ease;
+}
+.MenuItem:nth-child(1):hover {
+    transform: translateY(0px);
+}
