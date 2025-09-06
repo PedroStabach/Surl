@@ -1,46 +1,48 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+.Body {
+  margin-top: 10vh;
+  display: inline-block;
 }
-
+h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: bolder;
+}
+h2 {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 15px;
+  font-weight: 400;
+}
 .container {
-  display: grid;
-  grid-template-areas:
-    "header header"
-    "sidebar main"
-    "footer footer";
-  grid-template-columns: 200px 1fr;
-  grid-template-rows: 60px 1fr 40px;
-  height: 100vh;
-  gap: 10px;
+  
 }
-
-header {
-  grid-area: header;
-  background: #4f46e5;
+button {
+  font-size: 1rem;
+  margin-right: 10px;
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 60px;
+  background-color: #734ce0;
   color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 }
-
-aside {
-  grid-area: sidebar;
-  background: #e5e7eb;
+button:hover {
+  background-color: #ffffff;
+  color: #734ce0;
+  border: 1px solid #734ce0;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+}
+input {
+  font-size: 1.6rem;
   padding: 10px;
-}
-
-main {
-  grid-area: main;
-  background: #f3f4f6;
-  padding: 10px;
-}
-
-footer {
-  grid-area: footer;
-  background: #4f46e5;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 70vh;
+  height: 10vh;
+  border: .5px solid #ffffff;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  margin-bottom: 20px;
 }

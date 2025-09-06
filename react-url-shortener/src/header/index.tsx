@@ -11,7 +11,7 @@ export function Header () {
             <Menu>
                 <MenuItem><div className={styles.logo}><img src={logoImg} alt="logo" /></div></MenuItem>
                 <MenuItem><a href="">Seus Links</a></MenuItem>
-                <MenuItem><a href="">Como funciona</a></MenuItem>
+                <MenuItem><a href="">Home</a></MenuItem>
             </Menu>
             <Menu>
                 <MenuItem><FiSettings size={20} /></MenuItem>
