@@ -1,15 +1,9 @@
 .footer {
-    background: linear-gradient(to top, #5e3bbf, #ffffff);
+    background: #11002c;
     width: 100%;
     height: 10vh;
 }
-.footerDown {
-    height: 30px;
-    background-color: #5e3bbf ;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 nav ul {
     display: flex;
     max-width: 1280px;

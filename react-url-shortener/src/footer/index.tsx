@@ -5,9 +5,7 @@ export function Footer () {
         <>
             <div className={styles.footer}>
                 <div className={styles.area}></div>
-            </div>
-            <div className={styles.footerDown}>
-                <nav>
+                 <nav>
                     <ul>
                         <li>Copyright © 2025 Surl Todos os direitos reservados.</li>
                         <li><a href="">Termos</a></li>
@@ -15,7 +13,7 @@ export function Footer () {
                         <li><a href="">Politica de cookies</a></li>
                     </ul>
                 </nav>
-            </div>
+            </div>   
         </>
     )
 }

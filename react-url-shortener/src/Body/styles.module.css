@@ -1,6 +1,9 @@
 .Body {
   margin-top: 10vh;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  width: 100%;
 }
 h1 {
   font-size: 2.5rem;
@@ -13,10 +16,9 @@ h2 {
   color: #555;
   margin-bottom: 15px;
   font-weight: 400;
+  margin-bottom: 4rem;
 }
-.container {
-  
-}
+
 button {
   font-size: 1rem;
   margin-right: 10px;
@@ -45,4 +47,17 @@ input {
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   margin-bottom: 20px;
+}
+.container {
+  padding: 3rem;
+  flex: 1;
+}
+.container:nth-child(2) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container img {
+  box-shadow: 10px 10px 10px #b5b5b5;
+  max-width: 30rem;
 }

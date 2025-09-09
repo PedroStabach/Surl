@@ -16,3 +16,6 @@
 a:hover {
     color: rgb(107, 132, 132);
 }
+a:active {
+    background-color: red;
+}
