@@ -3,11 +3,10 @@ import styles from  './styles.module.css';
 export function Footer () {
     return (
         <>
-            <div className={styles.footer}>
-                <div className={styles.area}></div>
-                 <nav>
+            <div className={styles.footer}>            
+                <nav>
                     <ul>
-                        <li>Copyright © 2025 Surl Todos os direitos reservados.</li>
+                        <li>Desenvolvido por Pedro Stabach</li>
                         <li><a href="">Termos</a></li>
                         <li><a href="">Privacidade</a></li>
                         <li><a href="">Politica de cookies</a></li>
