@@ -1,7 +1,9 @@
 import { FaUserCircle} from "react-icons/fa";
 import styles from './styles.module.css';
 import { useState } from "react";
+
 const loged = false;
+
 export function Login () {
     const [mostrar, setMostrar] = useState(false);
     const [primeiroClick, setPrimeiroClick] = useState(false);
@@ -26,10 +28,6 @@ export function Login () {
         return (
             <>
                 <div className={styles.login} onClick={toggle}>Iniciar Sessao</div>
-                    {!mostrar && (
-                            // <div className={styles.overlay} onClick={() => {}}></div>
-                            <div className={styles.loginArea}></div>                      
-                    )}
             </>
         )
     }
