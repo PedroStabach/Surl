@@ -27,7 +27,7 @@ export function Login () {
     } else {
         return (
             <>
-                <div className={styles.login} onClick={toggle}>Iniciar Sessao</div>
+                <div className={styles.login} >Iniciar Sessao</div>
             </>
         )
     }
