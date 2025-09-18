@@ -28,7 +28,14 @@
 .loginArea h1 {
     font-size: 1.2rem;
     text-align: center;
-    margin-bottom: 30px;
+}
+.loginArea h2 {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: #4c4c4c;
+    font-weight: lighter;
+    font-size: 1.2rem;
 }
 .loginArea input {
     padding: 10px;
@@ -36,7 +43,11 @@
     width: 300px;
     border-radius: 5px;
     font-size: .8rem;
+    box-shadow: 0 0 0 #fff;
+    border: 1px solid #b7b7b7;
 }
+
+
 .overlay {
     position: fixed;
     top: 0;
