@@ -30,7 +30,7 @@ export function Header() {
         <MenuItem><Bandeiras /></MenuItem>
 
         <MenuItem>
-          <div onClick={() => setShowLogin(true)} style={{ cursor: "pointer" }}>
+          <div onClick={() =>setShowLogin(true)} style={{ cursor: "pointer" }}>
             <Login />
           </div>
         </MenuItem>

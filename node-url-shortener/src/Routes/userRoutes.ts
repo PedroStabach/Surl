@@ -4,9 +4,9 @@ const userRoutes = Router();
 
 userRoutes.post('/users', async (req: Request, res: Response) => {
   try {
-    const { Name, Email } = req.body;
+    const { Name, Email, Password } = req.body;
     const user = await prisma.user.create({
-      data: { Name, Email, CreationDate: new Date() },
+      data: { Name, Email, Password, CreationDate: new Date() },
     });
     res.json(user);
   } catch (error) {
@@ -46,11 +46,12 @@ userRoutes.get('/user/:id', async (req: Request, res: Response) => {
 userRoutes.put('/user/:ID', async (req: Request, res: Response) => {
   try {
     const ID = parseInt(req.params.ID);
-    const {Name} = req.body;
+    const {Name, Password} = req.body;
     const user = await prisma.user.update({
       where: {ID},
       data: {
-        Name
+        Name,
+        Password
     }
     });
     return res.json(user);
