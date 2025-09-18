@@ -9,7 +9,7 @@
 .loginArea {
     position: absolute;
     width: 370px;
-    height: 400px;
+    height: 430px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -26,28 +26,70 @@
     border: 1px solid #919191;
 }
 .loginArea h1 {
-    font-size: 1.2rem;
-    text-align: center;
-}
-.loginArea h2 {
     text-align: center;
     margin: 0;
     padding: 0;
+    color: #2e2e2e;
+    font-weight:500;
+    font-size: 1.2rem;
+}
+.loginArea h2 {
+    margin: 8px;
+    text-align: center;
+    padding: 0;
     color: #4c4c4c;
     font-weight: lighter;
-    font-size: 1.2rem;
+    font-size: 1rem;
+}
+
+.loginArea nav ul li {
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    border: 1px solid #b7b7b7;
+    cursor: pointer;
+}
+.loginArea nav ul li:hover {
+    border: 1px solid #eaeaea;
 }
 .loginArea input {
     padding: 10px;
-    height: 30px;
+    height: 35px;
     width: 300px;
     border-radius: 5px;
     font-size: .8rem;
     box-shadow: 0 0 0 #fff;
     border: 1px solid #b7b7b7;
 }
-
-
+.loginArea button {
+    margin: 0;
+    margin-bottom: 15px;
+    width: 300px;
+    height: 40px;
+}
+.loginArea input:hover {
+    border: 1px solid #eaeaea;
+}
+.loginArea span {
+    font-size: 1rem;
+}
+.loginArea .float {
+    position: absolute;
+    left: 20px;
+}
+.loginArea h3 {
+    text-align: center;
+}
+.loginArea h3 a {
+    text-decoration:underline;
+    font-size: .8rem;
+    color: #b7b7b7;
+}
+.loginArea h3 a:hover {
+    color: #4c4c4c;
+}
 .overlay {
     position: fixed;
     top: 0;
