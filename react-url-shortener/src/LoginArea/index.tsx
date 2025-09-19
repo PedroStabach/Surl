@@ -3,34 +3,34 @@ import { useState } from 'react';
 import { FcGoogle  } from 'react-icons/fc';
 import { FaFacebook, FaApple, FaArrowLeft  } from 'react-icons/fa';
 
+
 export function LoginArea({ onClose }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  async function handleSubmit(e) {
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
 
     try {
-    const response = await fetch("http://localhost:3000/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+      const response = await fetch("http://localhost:3000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || "Erro ao logar");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Erro ao logar");
+      }
+
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      onClose();                 // fecha modal/login area
+    } catch (err: any) {
+      setError(err.message);
     }
-
-    const data = await response.json();
-    localStorage.setItem("token", data.token);
-
-    alert("Login realizado com sucesso!");
-    onClose();
-  } catch (err) {
-    setError(err.message);
-  }
 }
   return (
     <div className={styles.body}>

@@ -1,16 +1,13 @@
 import { FaUserCircle } from "react-icons/fa";
 import styles from './styles.module.css';
-
-const loged = false;
+import { useAuth } from "./AuthContext";
 
 export function Login() {
-  if (loged) {
-    return (
-      <FaUserCircle size={35} />
-    );
+  const loggedIn = false;
+
+  if (loggedIn) {
+    return <FaUserCircle size={35} />;
   } else {
-    return (
-      <div className={styles.login}>Iniciar Sessao</div>
-    );
+    return <div className={styles.login}>Iniciar Sessão</div>;
   }
 }
