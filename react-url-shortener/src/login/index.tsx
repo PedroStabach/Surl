@@ -1,6 +1,6 @@
 import { FaUserCircle } from "react-icons/fa";
 import styles from './styles.module.css';
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../AuthContext";
 
 export function Login() {
   const loggedIn = false;
