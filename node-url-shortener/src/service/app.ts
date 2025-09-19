@@ -1,12 +1,17 @@
-import express from 'express';
-import routes from '../Routes/routes';
+import express, { Router } from 'express';
+import cors from 'cors';
+import authRoutes from '../auth/login'; // Importe seu roteador
+import router from '../Routes/routes';
 
 const app = express();
 const port = 3000;
 
-app.use(express.json());
-app.use("/surl", routes)
+app.use(express.json()); // Permite que o Express leia o corpo das requisições JSON
+app.use(cors()); // Se você ainda não fez isso, é crucial para evitar erros de CORS
 
+// Use o roteador para a rota '/auth'
+app.use('/auth', authRoutes); // Isso associa as rotas de login, etc., à URL /auth
+app.use(router)
 app.listen(port, () => {
-    console.log(`server running ate ${port}`);
+  console.log(`Servidor rodando em http://localhost:${port}`);
 });

@@ -15,7 +15,7 @@ export function LoginArea({ onClose }) {
     const response = await fetch("http://localhost:3000/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ Email: email, Password : password }),
+      body: JSON.stringify({ email, password }),
     });
 
     if (!response.ok) {
@@ -57,13 +57,13 @@ export function LoginArea({ onClose }) {
             <span>E-mail</span>
             <input type="text" 
             placeholder='Seu email'
-            value={Email}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             required/>
             <span>Password</span>
             <input type="password" 
             placeholder='Senha'
-            value={Password}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             />

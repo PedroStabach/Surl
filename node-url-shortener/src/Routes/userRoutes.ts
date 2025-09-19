@@ -1,14 +1,23 @@
 import {Router, Request, Response} from "express";
+import * as bcrypt from "bcrypt";
 import prisma from "../prisma/prisma";
 const userRoutes = Router();
 
 userRoutes.post('/users', async (req: Request, res: Response) => {
   try {
     const { Name, Email, Password } = req.body;
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(Password, saltRounds);
     const user = await prisma.user.create({
-      data: { Name, Email, Password, CreationDate: new Date() },
+      data: { Name, Email, Password: hashedPassword, CreationDate: new Date() },
     });
-    res.json(user);
+    res.json({
+      ID: user.ID,
+      Name: user.Name,
+      Email: user.Email,
+      Password: user.Password,
+      CreationDate: user.CreationDate
+      });
   } catch (error) {
     res.status(500).json({ error: "Erro ao criar usuário" });
   }
