@@ -20,7 +20,7 @@ model shortlink {
 model user {
   ID           Int         @id @default(autoincrement())
   Name         String      @db.VarChar(60)
-  Password     String      @db.VarChar(60)
+  Password     String?      @db.VarChar(60)
   Email        String      @unique(map: "Email") @db.VarChar(60)
   googleId  String?  @unique
   avatar    String?

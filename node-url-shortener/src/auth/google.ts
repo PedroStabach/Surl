@@ -19,7 +19,7 @@ authRoutes.post("/google", async (req, res) => {
     });
 
     const payload = ticket.getPayload();
-    const { Email, Name, sub, picture } = payload; // sub = ID único do Google
+    const { Name, Email, sub, picture } = payload; // sub = ID único do Google
 
     // Verifica se usuário já existe no banco
     let user = await prisma.user.findUnique({ where: { Email } });
