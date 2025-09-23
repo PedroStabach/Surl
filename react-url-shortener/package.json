@@ -10,10 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "google-auth-library": "^10.3.0",
     "i18next": "^25.5.0",
     "i18next-browser-languagedetector": "^8.2.0",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.542.0",
+    "prisma": "^6.16.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-i18next": "^15.7.3",

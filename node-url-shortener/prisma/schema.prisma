@@ -22,6 +22,8 @@ model user {
   Name         String      @db.VarChar(60)
   Password     String      @db.VarChar(60)
   Email        String      @unique(map: "Email") @db.VarChar(60)
+  googleId  String?  @unique
+  avatar    String?
   CreationDate DateTime?   @db.Date
   shortlink    shortlink[]
 }

@@ -54,13 +54,13 @@ export function LoginArea({ onClose }) {
           </nav>
           <h2>Ou</h2>
           <form onSubmit={handleSubmit}>
-            <span>E-mail</span>
+            <label>E-mail</label>
             <input type="text" 
             placeholder='Seu email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required/>
-            <span>Password</span>
+            <label>Password</label>
             <input type="password" 
             placeholder='Senha'
             value={password}
