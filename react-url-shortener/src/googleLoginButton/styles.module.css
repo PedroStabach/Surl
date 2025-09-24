@@ -1,0 +1,9 @@
+.GoogleLoginButton { 
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: .5rem;
+}
+.GoogleLoginButton:hover {
+    border: 1px solid #e3e3e3;
+    cursor: pointer;
+}
