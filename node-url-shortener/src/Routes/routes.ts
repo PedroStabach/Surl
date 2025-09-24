@@ -10,6 +10,6 @@ router.use(userRoutes);
 //CRUD LINK
 router.use(linkRouter);
 //AUTH
-router.use(authRoutes)
+router.use(authRoutes);
 
 export default router;

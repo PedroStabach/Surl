@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 import cors from 'cors';
-import authRoutes from '../auth/login'; // Importe seu roteador
+import authRoutes from '../auth/loginRoutes'; // Importe seu roteador
 import router from '../Routes/routes';
 
 const app = express();

@@ -1,7 +1,8 @@
 import styles from './styles.module.css';
 import { useState } from 'react';
 import { FcGoogle  } from 'react-icons/fc';
-import { FaFacebook, FaApple, FaArrowLeft  } from 'react-icons/fa';
+import GoogleLoginButton from '../googleLoginButton';
+import {  FaArrowLeft  } from 'react-icons/fa';
 
 
 export function LoginArea({ onClose }) {
@@ -45,13 +46,7 @@ export function LoginArea({ onClose }) {
           
           <h1>Bem vindo de volta</h1>
           <h2>Faça login da forma que preferir.</h2>
-          <nav>
-            <ul>
-              <li><FcGoogle style={{ fontSize: '30px' }} /></li>
-              <li><FaFacebook style={{ fontSize: '30px' }} /></li>
-              <li><FaApple style={{ fontSize: '30px' }} /></li>
-            </ul>
-          </nav>
+            <GoogleLoginButton />
           <h2>Ou</h2>
           <form onSubmit={handleSubmit}>
             <label>E-mail</label>
