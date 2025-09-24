@@ -7,13 +7,11 @@ import prisma from "../prisma/prisma";
 const googleRoutes = Router();
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-// POST /auth/google
 googleRoutes.post("/google", async (req, res) => {
   try {
     const { token } = req.body;
     if (!token) return res.status(400).json({ error: "Token do Google obrigatório" });
 
-    // Verifica token com Google
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience: process.env.GOOGLE_CLIENT_ID,
@@ -24,9 +22,8 @@ googleRoutes.post("/google", async (req, res) => {
       return res.status(400).json({ error: "Não foi possível obter dados do usuário do Google" });
     }   
 
-    const { name, email, sub, picture } = payload; // sub = ID único do Google
+    const { name, email, sub, picture } = payload; 
 
-    // Verifica se usuário já existe no banco
     let user = await prisma.user.findUnique({ where: { Email: email } });
 
     if (!user) {
@@ -40,7 +37,6 @@ googleRoutes.post("/google", async (req, res) => {
       });
     }
 
-    // Gera token JWT próprio da sua API
     const appToken = jwt.sign(
       { id: user.ID, email: user.Email },
       process.env.JWT_SECRET as string,
