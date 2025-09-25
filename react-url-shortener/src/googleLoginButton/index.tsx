@@ -1,5 +1,5 @@
-import { FaGoogle } from "react-icons/fa";
-import styles from "./styles.module.css";
+import { FaGoogle } from 'react-icons/fa';
+import styles from './styles.module.css';
 function GoogleLoginButton() {
   // URL para iniciar o login no Google
   const handleGoogleLogin = () => {
@@ -17,8 +17,14 @@ function GoogleLoginButton() {
   };
 
   return (
-      <div className={styles.GoogleLoginButton}>
-        <FaGoogle onClick={handleGoogleLogin} />
+      <div onClick={handleGoogleLogin} className={styles.GoogleLoginButton}>
+         <FaGoogle
+          style={{
+            width: '25px',
+            height: '25px',
+            cursor: 'pointer',
+            color: 'linear-gradient(45deg, #4285F4, #34A853, #FBBC05, #EA4335)',
+          }} />
       </div>
   );
 }
