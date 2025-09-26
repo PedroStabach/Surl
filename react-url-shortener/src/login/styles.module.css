@@ -19,4 +19,8 @@
     transition: transform .5s ease;
 }
 
-
+@media (max-width : 330px) {
+    .login {
+        width: 100px;
+    }
+}

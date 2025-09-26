@@ -105,6 +105,9 @@ input {
     font-size: 1.4rem;
     height: 8vh;
   }
+  .container img {
+    width: 500px;
+  }
 }
 
 /* Mobile pequeno */

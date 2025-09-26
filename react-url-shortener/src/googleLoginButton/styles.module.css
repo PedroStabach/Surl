@@ -1,4 +1,7 @@
 .GoogleLoginButton { 
+    display: flex;
+    align-items: center;
+    width: 300px;
     padding: 5px 10px;
     border: 1px solid #ccc;
     border-radius: .5rem;

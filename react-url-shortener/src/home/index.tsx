@@ -15,7 +15,7 @@ export function Home () {
                 </div>
             </div>
         <div className={styles.Home}>
-            <Works />  
+            <Works />
         </div>
         </>
     )

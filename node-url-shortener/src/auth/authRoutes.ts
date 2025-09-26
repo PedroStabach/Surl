@@ -6,5 +6,4 @@ const authRoutes = Router();
 
 authRoutes.use(loginRoutes);
 authRoutes.use(googleRoutes);
-
 export default authRoutes;

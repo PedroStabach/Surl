@@ -1,54 +1,84 @@
 .works {
-    width: 80%;
-    padding: 1.5rem;
-    border-radius: 2rem;
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(90deg, rgb(65, 138, 181), rgb(68, 211, 178));
-    margin-bottom: 6rem;
+  border-radius: 16px;
+  text-align: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #75d2d3, #8d4bb3);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
+
 .works h1 {
-    color: rgb(218, 218, 218);
-    padding: 1rem;
-    font-size: 1.2rem;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
+
 .containerArea {
-    min-width: 32rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1.5rem;
+  flex-wrap: wrap; /* garante quebra quando não couber */
 }
-.containerItens {
-    margin: 1rem;
-}
+
 .container {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    min-width: 150px;
-    border: 1px solid aliceblue;
-    text-align: center;
-    flex-wrap: wrap;
-    background-color: aliceblue;
-    flex: 1;
-    margin-left: 2rem;
-    margin-right: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0 , 0.2);
-    border-radius: 2rem;
-    cursor: pointer;
-    height: 11rem;
+  flex: 1 1 250px; /* cresce, encolhe, tamanho mínimo */
+  max-width: 320px;
+  border-radius: 14px;
+  background: #f9fbfd;
+  padding: 1.5rem;
+  border: 1px solid #e1e5ea;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.container:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
+}
+
+.containerItens {
+  color: #444;
+  margin: 0.5rem 0;
+}
+
+.container svg {
+  color: #8d4bb3;
+  margin-bottom: 0.8rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.container:hover svg {
+  color: #75d2d3;
+  transform: scale(1.1);
 }
 
 .container h2 {
-    margin: 0;
-    color: rgb(61, 61, 61);
-    font-weight: bold;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
-p {
-    padding: 1rem;
-    color: rgb(137, 137, 137);
-    font-size: .8rem;
+
+.container p {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+  .containerArea {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .containerArea {
+    flex-direction: column;
+    align-items: center;
+  }
+  .container {
+    max-width: 90%;
+  }
 }

@@ -1,6 +1,5 @@
 import styles from './styles.module.css';
 import { useState } from 'react';
-import { FcGoogle  } from 'react-icons/fc';
 import GoogleLoginButton from '../googleLoginButton';
 import {  FaArrowLeft  } from 'react-icons/fa';
 
@@ -39,7 +38,7 @@ export function LoginArea({ onClose }) {
         <div className={styles.loginArea}>
           <div className={styles.float}>
             <FaArrowLeft 
-              style={{ fontSize: '20px', cursor: 'pointer' }} 
+              style={{ fontSize: '20px', cursor: 'pointer'}} 
               onClick={onClose} 
             />
           </div>
