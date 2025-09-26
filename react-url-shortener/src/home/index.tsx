@@ -11,11 +11,11 @@ export function Home () {
                     <input type="text" placeholder='Copie seu longo URL aqui'/> <button>Diminua</button>
                 </div>
                 <div className={styles.container}>
-                    <img src={logo} alt="" />
+                    <img src={logo} alt="logo Surl" />
                 </div>
             </div>
         <div className={styles.Home}>
-            <Works />
+            <Works />  
         </div>
         </>
     )

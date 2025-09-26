@@ -1,40 +1,24 @@
-import { Menu } from '../menu';
-import { Login } from '../login';
-import { useState } from 'react';
-import { MenuItem } from '../menu-itens';
-import styles from './styles.module.css';
-import { FiSettings } from "react-icons/fi";
-import { Bandeiras } from '../bandeiras';
-import logoImg from '../images/surl-icon.png';
-import { LoginArea } from "../LoginArea";
+import { useState, useEffect } from "react";
+import { GenericMenu } from "../GenericMenu";
+import { MenuMoba } from "../menuMoba";
 
 export function Header() {
-  const [showLogin, setShowLogin] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <div className={styles.header}>
-      {showLogin && <LoginArea onClose={() => setShowLogin(false)} />}
-
-      <Menu>
-        <MenuItem>
-          <div className={styles.logo}>
-            <img src={logoImg} alt="logo" />
-          </div>
-        </MenuItem>
-        <MenuItem><a href="">Seus Links</a></MenuItem>
-        <MenuItem><a href="">Home</a></MenuItem>
-      </Menu>
-
-      <Menu>
-        <MenuItem><FiSettings size={20} /></MenuItem>
-        <MenuItem><Bandeiras /></MenuItem>
-
-        <MenuItem>
-          <div onClick={() =>setShowLogin(true)} style={{ cursor: "pointer" }}>
-            <Login />
-          </div>
-        </MenuItem>
-      </Menu>
-    </div>
+    <>
+      {isMobile ? <MenuMoba /> : <GenericMenu />}
+    </>
   );
 }

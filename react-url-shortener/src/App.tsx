@@ -1,12 +1,10 @@
 import './App.css';
-import './i18n/i18n'; 
-import { Header } from './header';
+import { Header } from './Header';
 import { Footer } from './footer';
 import { Body } from './Body';
 
 
 function App() {
-
   return (
     <>
       <Header />
