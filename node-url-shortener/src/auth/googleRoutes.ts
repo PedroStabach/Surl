@@ -45,7 +45,7 @@ googleRoutes.get("/google/callback", async (req, res) => {
     const appToken = jwt.sign(
       { id: user.ID, email: user.Email },
       process.env.JWT_SECRET as string,
-      { expiresIn: "7d" }
+      { expiresIn: "1d" }
     );
 
     //redireciona para o front

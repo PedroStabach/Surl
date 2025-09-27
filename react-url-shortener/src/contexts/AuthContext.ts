@@ -1,69 +1,91 @@
-// src/contexts/AuthContext.js
+// src/contexts/AuthContext.tsx
+import React, { createContext, useContext, useState, useEffect } from "react";
+import type { ReactNode } from "react";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
-// Importe as funções do seu SDK do Google (se estiver usando)
+type User = {
+  id: number;
+  name: string;
+  email: string;
+};
 
-const AuthContext = createContext();
+type AuthContextType = {
+  isLoggedIn: boolean;
+  user: User | null;
+  isLoading: boolean;
+  login: (token: string, userData: User) => void;
+  logout: () => void;
+};
 
-// Hook personalizado para facilitar o acesso
-export const useAuth = () => useContext(AuthContext);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }) => {
-  // Estado que é a "única fonte de verdade"
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth deve ser usado dentro de AuthProvider");
+  }
+  return context;
+};
+
+type AuthProviderProps = {
+  children: ReactNode;
+};
+
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // Começa como true
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // --- 1. Lógica de Verificação Inicial ---
   useEffect(() => {
-    // 1. Tenta pegar o token do armazenamento local (localStorage)
-    const storedToken = localStorage.getItem('authToken');
+    const storedToken = localStorage.getItem("authToken");
 
-    if (storedToken) {
-      // 2. Se o token existir, chame sua API para validar!
-      // Exemplo (SUA LÓGICA DEVE ESTAR AQUI):
-      api.validateToken(storedToken)
-        .then(response => {
-          // Token válido:
+    const validateToken = async () => {
+      if (storedToken) {
+        try {
+          const response = await fetch("http://localhost:3000/auth/validate", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${storedToken}`,
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (!response.ok) throw new Error("Token inválido ou expirado");
+
+          const data = await response.json();
           setIsLoggedIn(true);
-          setUser(response.data.user); // Pega dados do usuário do backend
-        })
-        .catch(() => {
-          // Token inválido/expirado (401):
-          localStorage.removeItem('authToken');
+          setUser(data.user);
+        } catch (err) {
+          console.error(err);
+          localStorage.removeItem("authToken");
           setIsLoggedIn(false);
-        })
-        .finally(() => {
-          setIsLoading(false); // Sempre para de carregar no final
-        });
-    } else {
-      setIsLoading(false);
-    }
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setIsLoading(false);
+      }
+    };
+
+    validateToken();
   }, []);
 
-  // --- 2. Função de Login Unificada ---
-  const login = (token, userData) => {
-    // Armazena SEU JWT
-    localStorage.setItem('authToken', token);
+  const login = (token: string, userData: User) => {
+    localStorage.setItem("authToken", token);
     setUser(userData);
     setIsLoggedIn(true);
   };
 
-  // --- 3. Função de Logout Simples ---
   const logout = () => {
-    // 1. Limpa o armazenamento local
-    localStorage.removeItem('authToken');
-    
-    // 2. Limpa o estado
+    localStorage.removeItem("authToken");
     setUser(null);
     setIsLoggedIn(false);
-
-    // 3. (OPCIONAL/RECOMENDADO): Chama o logout do Google para limpar a sessão externa
-    // Ex: googleSdk.signOut(); 
   };
-  
-  // O valor que será disponibilizado para toda a aplicação
-  const value = { isLoggedIn, user, isLoading, login, logout };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  const value: AuthContextType = { isLoggedIn, user, isLoading, login, logout };
+
+  return (
+  <AuthContext.Provider value={value}>
+    {children}
+  </AuthContext.Provider>
+  );
 };
