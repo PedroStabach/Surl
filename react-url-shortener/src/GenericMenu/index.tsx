@@ -5,11 +5,26 @@ import { MenuItem } from '../menu-itens';
 import styles from './styles.module.css';
 import logoImg from '../images/surl-icon.png';
 import { LoginArea } from "../LoginArea";
+import { useAuth } from '../contexts/AuthContext';
 export function GenericMenu() {
     const [showLogin, setShowLogin] = useState(false);
+    const { isLoggedIn, user, logout } = useAuth();
     return (
         <div className={styles.header}>
       {showLogin && <LoginArea onClose={() => setShowLogin(false)} />}
+        {isLoggedIn ? (
+        <div>
+          Olá, {user?.name}!
+          <button onClick={logout}>Sair</button>
+        </div>
+      ) : (
+        <div>
+          <div>voce nao esta logado</div>
+        </div>
+      )}
+
+
+
 
       <Menu>
         <MenuItem>

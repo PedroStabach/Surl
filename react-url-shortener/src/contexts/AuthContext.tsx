@@ -70,10 +70,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   const login = (token: string, userData: User) => {
-    localStorage.setItem("authToken", token);
-    setUser(userData);
-    setIsLoggedIn(true);
-  };
+  localStorage.setItem("authToken", token);
+  setUser(userData);
+  setIsLoggedIn(true);
+};
 
   const logout = () => {
     localStorage.removeItem("authToken");

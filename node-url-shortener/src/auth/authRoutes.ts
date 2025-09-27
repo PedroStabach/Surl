@@ -8,4 +8,5 @@ const authRoutes = Router();
 authRoutes.use(loginRoutes);
 authRoutes.use(googleRoutes);
 authRoutes.use(validateToken);
+
 export default authRoutes;
