@@ -6,6 +6,7 @@ import styles from './styles.module.css';
 import logoImg from '../images/surl-icon.png';
 import { LoginArea } from "../LoginArea";
 import { useAuth } from '../contexts/AuthContext';
+import GoogleLogoutButton from '../googleLogoutButton/googleLogoutButton';
 export function GenericMenu() {
     const [showLogin, setShowLogin] = useState(false);
     const { isLoggedIn, user, logout } = useAuth();
@@ -16,16 +17,13 @@ export function GenericMenu() {
         <div>
           Olá, {user?.name}!
           <button onClick={logout}>Sair</button>
+          <GoogleLogoutButton />
         </div>
       ) : (
         <div>
           <div>voce nao esta logado</div>
         </div>
       )}
-
-
-
-
       <Menu>
         <MenuItem>
           <div className={styles.logo}>
