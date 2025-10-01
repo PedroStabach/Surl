@@ -33,6 +33,7 @@ export function LoginArea({ onClose }: LoginAreaProps) {
 
       const data = await response.json();
       login(data.token);
+      localStorage.setItem('token', data.token);
       onClose();
     } catch (err: any) {
       setError(err.message);

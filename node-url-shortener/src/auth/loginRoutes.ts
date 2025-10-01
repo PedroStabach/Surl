@@ -15,7 +15,11 @@ loginRoutes.post("/auth/login", async (req, res) => {
       return res.status(401).json({ error: "Credenciais inválidas" });
     }
 
-    const token = jwt.sign({ id: user.ID, email: user.Email, name: user.Name }, process.env.JWT_SECRET!, { expiresIn: "1d" });
+    const token = jwt.sign(
+      { userId: user.ID, email: user.Email, name: user.Name },
+      process.env.JWT_SECRET!,
+      { expiresIn: "1d" }
+    );
 
     res.json({ token, user });
   } catch (err) {

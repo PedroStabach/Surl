@@ -38,10 +38,10 @@ authGoogle.post("/auth/google", async (req, res) => {
     }
 
     const appToken = jwt.sign(
-      { id: user.ID, email: user.Email },
-      process.env.JWT_SECRET as string,
-      { expiresIn: "1d" }
-    );
+          { userId: user.ID, email: user.Email, name: user.Name },
+          process.env.JWT_SECRET!,
+          { expiresIn: "1d" }
+        );
 
     res.json({ token: appToken, user });
   } catch (err) {
