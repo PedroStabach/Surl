@@ -1,81 +1,52 @@
-// src/routes/googleAuth.ts
 import { Router } from "express";
-import fetch from "node-fetch"; // npm install node-fetch@2
+import { OAuth2Client } from "google-auth-library";
 import jwt from "jsonwebtoken";
+import prisma from "../prisma/prisma";
 
 const authGoogle = Router();
 
-// Substitua pelas suas credenciais do Google Cloud
-const CLIENT_ID = process.env.GOOGLE_CLIENT_ID!;
-const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!;
-const REDIRECT_URI = "http://localhost:3000/google/callback";
-
-interface GoogleTokenResponse {
-  access_token: string;
-  expires_in: number;
-  id_token: string;
-  scope: string;
-  token_type: string;
-  refresh_token?: string;
-}
-
-interface GoogleIdTokenPayload {
-  sub: string;
-  email: string;
-  name: string;
-  picture?: string;
-  [key: string]: any;
-}
+const client = new OAuth2Client(
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  "http://localhost:3000/google/callback" // mesmo redirectUri do frontend
+);
 
 authGoogle.post("/auth/google", async (req, res) => {
-  const { code } = req.body;
-
-  if (!code) return res.status(400).json({ error: "Code não enviado" });
-
   try {
-    // Troca o code pelo token do Google
-    const params = new URLSearchParams();
-    params.append("code", code);
-    params.append("client_id", CLIENT_ID);
-    params.append("client_secret", CLIENT_SECRET);
-    params.append("redirect_uri", REDIRECT_URI);
-    params.append("grant_type", "authorization_code");
+    const { code } = req.body;
+    if (!code) return res.status(400).json({ error: "Code não enviado" });
 
-    const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: params.toString(),
+    const { tokens } = await client.getToken(code);
+    client.setCredentials(tokens);
+
+    const userInfo = await client.request({
+      url: "https://www.googleapis.com/oauth2/v2/userinfo",
     });
 
-    const tokenData = (await tokenResponse.json()) as GoogleTokenResponse;
-    const { id_token } = tokenData;
+    const userData = userInfo.data as { email: string; name: string; picture: string; id: string };
 
-    if (!id_token) {
-      return res.status(400).json({ error: "id_token não recebido do Google" });
+    let user = await prisma.user.findUnique({ where: { Email: userData.email } });
+    if (!user) {
+      user = await prisma.user.create({
+        data: {
+          Email: userData.email,
+          Name: userData.name,
+          avatar: userData.picture,
+          googleId: userData.id,
+        },
+      });
     }
 
-    // Decodifica id_token (JWT do Google)
-    const base64Payload = id_token.split(".")[1];
-    const payload: GoogleIdTokenPayload = JSON.parse(
-      Buffer.from(base64Payload, "base64").toString()
+    const appToken = jwt.sign(
+      { id: user.ID, email: user.Email },
+      process.env.JWT_SECRET as string,
+      { expiresIn: "1d" }
     );
 
-    // Cria objeto do usuário
-    const user = {
-      id: payload.sub,
-      name: payload.name,
-      email: payload.email,
-    };
-
-    // Cria JWT do seu backend
-    const backendToken = jwt.sign(user, process.env.JWT_SECRET!, {
-      expiresIn: "1d",
-    });
-
-    return res.json({ token: backendToken, user });
+    res.json({ token: appToken, user });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: "Erro ao autenticar com Google" });
+    res.status(500).json({ error: "Erro na autenticação com Google" });
   }
 });
 

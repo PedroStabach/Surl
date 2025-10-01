@@ -1,91 +1,72 @@
 // src/contexts/AuthContext.tsx
-import React, { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import type { ReactNode } from "react";
+import {jwtDecode} from "jwt-decode";
 
-type User = {
-  id: number;
-  name: string;
+interface User {
+  id: string;
   email: string;
-};
+  name?: string;
+  avatar?: string;
+}
 
-type AuthContextType = {
-  isLoggedIn: boolean;
+interface AuthContextType {
+  loggedIn: boolean;
+  token: string | null;
   user: User | null;
-  isLoading: boolean;
-  login: (token: string, userData: User) => void;
+  login: (token: string) => void;
   logout: () => void;
-};
+}
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth deve ser usado dentro de AuthProvider");
-  }
-  return context;
-};
-
-type AuthProviderProps = {
-  children: ReactNode;
-};
-
-export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const loggedIn = !!token;
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("authToken");
+  const login = (newToken: string) => {
+    setToken(newToken);
+    localStorage.setItem("authToken", newToken);
 
-    const validateToken = async () => {
-      if (storedToken) {
-        try {
-          const response = await fetch("http://localhost:3000/auth/validate", {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${storedToken}`,
-              "Content-Type": "application/json",
-            },
-          });
-
-          if (!response.ok) throw new Error("Token inválido ou expirado");
-
-          const data = await response.json();
-          setIsLoggedIn(true);
-          setUser(data.user);
-        } catch (err) {
-          console.error(err);
-          localStorage.removeItem("authToken");
-          setIsLoggedIn(false);
-        } finally {
-          setIsLoading(false);
-        }
-      } else {
-        setIsLoading(false);
-      }
-    };
-
-    validateToken();
-  }, []);
-
-  const login = (token: string, userData: User) => {
-  localStorage.setItem("authToken", token);
-  setUser(userData);
-  setIsLoggedIn(true);
-};
-
-  const logout = () => {
-    localStorage.removeItem("authToken");
-    setUser(null);
-    setIsLoggedIn(false);
+    try {
+      const decoded = jwtDecode<User>(newToken);
+      setUser(decoded);
+    } catch {
+      setUser(null);
+    }
   };
 
-  const value: AuthContextType = { isLoggedIn, user, isLoading, login, logout };
+  const logout = () => {
+    setToken(null);
+    setUser(null);
+    localStorage.removeItem("authToken");
+    // opcional: desconectar do Google
+    window.location.href = "https://accounts.google.com/Logout";
+  };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const urlToken = params.get("token");
+
+    if (urlToken) {
+      login(urlToken);
+      window.history.replaceState({}, document.title, "/");
+    } else {
+      const storedToken = localStorage.getItem("authToken");
+      if (storedToken) login(storedToken);
+    }
+  }, []);
 
   return (
-  <AuthContext.Provider value={value}>
-    {children}
-  </AuthContext.Provider>
+    <AuthContext.Provider value={{ loggedIn, token, user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
   );
-};
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error("useAuth must be used within AuthProvider");
+  return context;
+}

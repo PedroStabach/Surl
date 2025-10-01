@@ -1,21 +1,27 @@
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-import {jwtDecode} from 'jwt-decode';
 
 export function VerificarLogin() {
   return (
     <GoogleOAuthProvider clientId="102427410203-bq7khqdk153rb7phagc9jir0a3ugfcjj.apps.googleusercontent.com">
       <GoogleLogin
-        onSuccess={(credentialResponse) => {
+        onSuccess={async (credentialResponse) => {
           const token = credentialResponse.credential;
-          
-          // Salva no localStorage
-          localStorage.setItem("token", token!);
 
-          // Decodifica dados do usuário
-          const user: any = jwtDecode(token!);
-          console.log("Usuário:", user);
+          // Envia o token do Google para o backend
+          const res = await fetch("http://localhost:3000/auth/google", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token }),
+          });
 
-          alert("Login Google concluído!");
+          const data = await res.json();
+
+          if (data.appToken) {
+            localStorage.setItem("token", data.appToken);
+            alert("Login Google concluído!");
+          } else {
+            alert("Erro ao autenticar com backend!");
+          }
         }}
         onError={() => {
           alert("Erro no login Google!");
