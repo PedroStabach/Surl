@@ -9,7 +9,6 @@ export function MenuMoba() {
     return (
         <div className={styles.header}>
       {showLogin && <LoginArea onClose={() => setShowLogin(false)} />}
-
       <Menu>
         <MenuItem><a href="">Seus Links</a></MenuItem>
         <MenuItem><a href="">Home</a></MenuItem>
