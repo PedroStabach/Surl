@@ -63,6 +63,7 @@ export function LoginArea({ onClose }: LoginAreaProps) {
             <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} required />
 
             <button type="submit">Entrar</button>
+            <h3><a href="">Criar conta</a></h3>
             {error && <p style={{ color: "red" }}>{error}</p>}
           </form>
         </div>

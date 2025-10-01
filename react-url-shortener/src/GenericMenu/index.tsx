@@ -4,24 +4,13 @@ import { useState } from 'react';
 import { MenuItem } from '../menu-itens';
 import styles from './styles.module.css';
 import logoImg from '../images/surl-icon.png';
-import { LoginArea } from "../LoginArea";
-import { useAuth } from '../contexts/AuthContext';
+import { LoginArea } from '../LoginArea';
+
 export function GenericMenu() {
-    const [showLogin, setShowLogin] = useState(false);
-    const { loggedIn, user, logout } = useAuth();
-    return (
-        <div className={styles.header}>
-      {showLogin && <LoginArea onClose={() => setShowLogin(false)} />}
-        {loggedIn ? (
-        <div>
-          Olá, {user?.name}!
-          <button onClick={logout}>Sair</button>
-        </div>
-      ) : (
-        <div>
-          <div>voce nao esta logado</div>
-        </div>
-      )}
+  const [showLogin, setShowLogin] = useState(false);
+
+  return (
+    <div className={styles.header}>
       <Menu>
         <MenuItem>
           <div className={styles.logo}>
@@ -34,11 +23,11 @@ export function GenericMenu() {
 
       <Menu>
         <MenuItem>
-          <div onClick={() =>setShowLogin(true)} style={{ cursor: "pointer" }}>
-            <Login />
-          </div>
+          <Login onLoginClick={() => setShowLogin(true)} />
         </MenuItem>
       </Menu>
+
+      {showLogin && <LoginArea onClose={() => setShowLogin(false)} />}
     </div>
-    )
+  );
 }

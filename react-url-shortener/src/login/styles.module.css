@@ -10,7 +10,9 @@
                 color 0.5s ease, 
                 border 0.5s ease; 
 }
-
+button {
+    color: aliceblue;
+}
 .login:hover {
     color: #5e3bbf;
     background-color: rgb(255, 255, 255);
