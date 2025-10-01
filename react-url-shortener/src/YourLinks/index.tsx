@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import styles from './styles.module.css';
 interface Link {
   id: number;
   OriginalUrl: string;
@@ -39,15 +39,24 @@ export function YourLinks() {
   }, []);
 
   return (
-    <div> 
+    <div className={styles.container}>
       <h2>Seus Links</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {links.length === 0 && !error && <p>Nenhum link encontrado.</p>}
-      <ul>
+      {error && <p className={styles.error}>{error}</p>}
+
+      {links.length === 0 && !error && <p className={styles.empty}>Nenhum link encontrado.</p>}
+
+      <ul className={styles.list}>
         {links.map((link) => (
-          <li key={link.id}>
-            Original: <a href={link.OriginalUrl} target="_blank" rel="noreferrer">{link.OriginalUrl}</a> <br />
-            Curto: <a href={`http://localhost:3000/${link.ShortUrl}`} target="_blank" rel="noreferrer">{`http://localhost:3000/${link.ShortUrl}`}</a>
+          <li className={styles.card} key={link.id}>
+            <strong>Original:</strong>{" "}
+            <a href={link.OriginalUrl} target="_blank" rel="noreferrer">
+              {link.OriginalUrl}
+            </a>
+            <br />
+            <strong>Curto:</strong>{" "}
+            <a href={`http://localhost:3000/${link.ShortUrl}`} target="_blank" rel="noreferrer">
+              {`http://localhost:3000/${link.ShortUrl}`}
+            </a>
           </li>
         ))}
       </ul>

@@ -1,17 +1,23 @@
 import './App.css';
-import { Header } from './Header';
 import { Footer } from './footer';
-import { Body } from './Body';
-
+import { Header } from './Header';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Home } from './home';
+import { YourLinks } from './YourLinks';
 
 function App() {
   return (
-    <>
+    <Router>
       <Header />
-      <Body />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/links" element={<YourLinks />} />
+        </Routes>
+      </main>
       <Footer />
-    </>
-  )
+    </Router>
+  );
 }
 
 export default App;

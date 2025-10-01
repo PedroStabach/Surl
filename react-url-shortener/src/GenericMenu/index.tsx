@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Menu } from '../menu';
 import { Login } from '../login';
 import { useState } from 'react';
@@ -17,8 +18,8 @@ export function GenericMenu() {
             <img src={logoImg} alt="logo" />
           </div>
         </MenuItem>
-        <MenuItem><a href="">Seus Links</a></MenuItem>
-        <MenuItem><a href="">Home</a></MenuItem>
+        <MenuItem><Link to="/links">Seus Links</Link></MenuItem>
+        <MenuItem><Link to="/">Home</Link></MenuItem>
       </Menu>
 
       <Menu>
