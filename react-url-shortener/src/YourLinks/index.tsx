@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import {jwtDecode} from "jwt-decode";
 
 interface Link {
   id: number;
@@ -20,23 +19,16 @@ export function YourLinks() {
       }
 
       try {
-        // Decodifica o token se você quiser usar o userId localmente (opcional)
-        const decoded: any = jwtDecode(token);
-        const userId = decoded.userId;
-
-        // Faz a requisição para buscar os links do usuário
-        const response = await fetch(`http://localhost:3000/auth/links/${userId}`, {
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
+        const response = await fetch(`http://localhost:3000/auth/links`, {
+          headers: { "Authorization": `Bearer ${token}` },
         });
 
+        const data = await response.json();
+
         if (!response.ok) {
-          const errorData = await response.json().catch(() => ({ error: "Erro inesperado" }));
-          throw new Error(errorData.error || "Erro ao buscar links");
+          throw new Error(data.error || "Erro inesperado");
         }
 
-        const data: Link[] = await response.json();
         setLinks(data);
       } catch (err: any) {
         setError(err.message);
@@ -44,20 +36,18 @@ export function YourLinks() {
     }
 
     fetchLinks();
-  }, []); // Executa só uma vez ao montar o componente
+  }, []);
 
   return (
-    <div>
+    <div> 
       <h2>Seus Links</h2>
       {error && <p style={{ color: "red" }}>{error}</p>}
-
       {links.length === 0 && !error && <p>Nenhum link encontrado.</p>}
-
       <ul>
         {links.map((link) => (
           <li key={link.id}>
             Original: <a href={link.OriginalUrl} target="_blank" rel="noreferrer">{link.OriginalUrl}</a> <br />
-            Curto: <a href={`http://localhost:3030/${link.ShortUrl}`} target="_blank" rel="noreferrer">{`http://localhost:3000/${link.ShortUrl}`}</a>
+            Curto: <a href={`http://localhost:3000/${link.ShortUrl}`} target="_blank" rel="noreferrer">{`http://localhost:3000/${link.ShortUrl}`}</a>
           </li>
         ))}
       </ul>

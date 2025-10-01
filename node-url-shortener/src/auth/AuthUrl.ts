@@ -1,54 +1,44 @@
-import { Router, Request, Response, NextFunction } from "express";
+import { Router, Request, Response } from "express";
 import prisma from "../prisma/prisma";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import { authMiddleware } from "./authMiddleware"; 
 import { generateRandomShortUrl } from "../shortnerLink/shortnerLink";
 
-// extendendo o Request
-declare global {
-  namespace Express {
-    interface Request {
-      userId?: number;
-    }
-  }
-}
+const authLinks = Router();
 
-const AuthUrl = Router();
-
-function authMiddleware(req: Request, res: Response, next: NextFunction) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (!token) return res.status(401).json({ error: "Token não fornecido" });
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: number };
-    req.userId = decoded.userId;
-    next();
-  } catch {
-    return res.status(403).json({ error: "Token inválido" });
-  }
-}
-
-AuthUrl.post("/auth/url", authMiddleware, async (req: Request, res: Response) => {
+// Criar link curto
+authLinks.post("/auth/url", authMiddleware, async (req: Request, res: Response) => {
   try {
     const { OriginalUrl } = req.body;
-    if (!OriginalUrl) {
-      return res.status(400).json({ error: "OriginalUrl é obrigatório" });
-    }
+    if (!OriginalUrl) return res.status(400).json({ error: "OriginalUrl é obrigatório" });
+
     const ShortUrl = await generateRandomShortUrl(OriginalUrl);
 
     const newUrl = await prisma.shortlink.create({
       data: {
         OriginalUrl,
         ShortUrl,
-        fk_UserID: req.userId!, // `!` porque sabemos que veio do token
+        fk_UserID: req.userId!, // vem do token
       },
     });
 
-    return res.status(201).json(newUrl);
+    res.status(201).json(newUrl);
   } catch (err) {
-    console.error("Erro ao criar URL:", err);
-    return res.status(500).json({ error: "Erro interno do servidor" });
+    console.error(err);
+    res.status(500).json({ error: "Erro interno do servidor" });
   }
 });
 
-export default AuthUrl;
+// Listar todos os links do usuário logado
+authLinks.get("/auth/links", authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const links = await prisma.shortlink.findMany({
+      where: { fk_UserID: req.userId },
+    });
+    res.json(links);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erro ao buscar links" });
+  }
+});
+
+export default authLinks;
