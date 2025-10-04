@@ -5,6 +5,7 @@ import validateToken from "./validateTokenRoute";
 import authGoogle from "./authGoogle";
 import AuthUrl from "./AuthUrl";
 import authLinks from "./authYourLinks";
+import AuthCreateUser from "./AuthCreateUser";
 
 const authRoutes = Router();
 
@@ -14,4 +15,6 @@ authRoutes.use(validateToken);
 authRoutes.use(authGoogle);
 authRoutes.use(AuthUrl);
 authRoutes.use(authLinks);
+authRoutes.use(AuthCreateUser);
+
 export default authRoutes;
