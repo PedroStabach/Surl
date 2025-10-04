@@ -4,7 +4,7 @@ import { Header } from './Header';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Home } from './home';
 import { YourLinks } from './YourLinks';
-import { CreateAcount } from './CreateAcount';
+import { CreateAccount } from './CreateAcount';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/links" element={<YourLinks />} />
-          <Route path='/createUser' element={<CreateAcount />} />
+          <Route path='/createUser' element={<CreateAccount />} />
         </Routes>
       </main>
       <Footer />

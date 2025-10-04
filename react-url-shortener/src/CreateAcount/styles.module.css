@@ -1,0 +1,130 @@
+/* Tela inteira */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #7e3ff2 0%, #a163f5 50%, #6a11cb 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Card central */
+.container .form {
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* Título */
+.container .title {
+  text-align: center;
+  color: #6a11cb;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Labels */
+.container label {
+  font-weight: 600;
+  color: #444;
+}
+
+/* Inputs */
+.container input {
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.container input:focus {
+  border-color: #7e3ff2;
+  box-shadow: 0 0 8px rgba(126, 63, 242, 0.3);
+}
+
+/* Botão */
+.container button {
+  margin-top: 10px;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #7e3ff2, #6a11cb);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.container button:hover {
+  background: linear-gradient(135deg, #6a11cb, #7e3ff2);
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* Mensagem de erro */
+.container .error {
+  color: #b71c1c;
+  background: #fce4ec;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-align: center;
+  border: 1px solid #f8bbd0;
+}
+
+/* Animação de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container .form {
+    padding: 30px 20px;
+    max-width: 100%;
+  }
+
+  .container .title {
+    font-size: 1.6rem;
+  }
+
+  .container input {
+    font-size: 0.95rem;
+    padding: 12px;
+  }
+
+  .container button {
+    font-size: 0.95rem;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container .form {
+    padding: 20px 15px;
+    border-radius: 12px;
+  }
+
+  .container .title {
+    font-size: 1.4rem;
+  }
+}
