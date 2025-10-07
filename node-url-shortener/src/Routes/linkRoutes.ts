@@ -5,15 +5,14 @@ import {generateRandomShortUrl} from '../shortnerLink/shortnerLink';
 const linkRouter = Router();
 linkRouter.post('/link',async (req: Request, res: Response) => {
   try {
-    const {OriginalUrl,fk_UserID} = req.body;
-    const ShortUrl = await generateRandomShortUrl(OriginalUrl);
+    const {originalUrl,fkUserId} = req.body;
+    const shortUrl = await generateRandomShortUrl(originalUrl);
     
     const url = await prisma.shortlink.create({
       data: {
-        OriginalUrl: OriginalUrl,
-        ShortUrl,
-        fk_UserID: parseInt(fk_UserID, 10)
-      }
+        originalUrl,
+        shortUrl,
+        fkUserId      }
     });
     return res.json(url);
   } catch (error) {
@@ -33,12 +32,12 @@ linkRouter.get('/:shortCode', async (req: Request, res:Response) => {
   try {
     const shortCode = (req.params.shortCode);
     const surl = await prisma.shortlink.findFirst({
-      where: {ShortUrl: shortCode}
+      where: {shortUrl: shortCode}
     });
     if(!surl) {
       return res.status(404).json({erro : "link nao encontrado"});
     }
-    return res.redirect(surl.OriginalUrl!)
+    return res.redirect(surl.originalUrl!)
   } catch (error) {
     return res.status(500).json({erro : "nao foi possivel encontrar o link"});
   }
@@ -50,7 +49,7 @@ linkRouter.delete('/:shortCode', async (req : Request, res : Response) => {
       return res.status(400).json({ erro: "ID inválido" });
     }
     const link = await prisma.shortlink.delete({
-      where : {ShortUrl : shortCode}
+      where : {shortUrl : shortCode}
     })
     return res.json(link);
   } catch (e) {

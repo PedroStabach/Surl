@@ -25,12 +25,12 @@ authGoogle.post("/auth/google", async (req, res) => {
 
     const userData = userInfo.data as { email: string; name: string; picture: string; id: string };
 
-    let user = await prisma.user.findUnique({ where: { Email: userData.email } });
+    let user = await prisma.user.findUnique({ where: { email: userData.email } });
     if (!user) {
       user = await prisma.user.create({
         data: {
-          Email: userData.email,
-          Name: userData.name,
+          email: userData.email,
+          name: userData.name,
           avatar: userData.picture,
           googleId: userData.id,
         },
@@ -38,7 +38,7 @@ authGoogle.post("/auth/google", async (req, res) => {
     }
 
     const appToken = jwt.sign(
-          { userId: user.ID, email: user.Email, name: user.Name },
+          { userId: user.id, email: user.email, name: user.name },
           process.env.JWT_SECRET!,
           { expiresIn: "1d" }
         );

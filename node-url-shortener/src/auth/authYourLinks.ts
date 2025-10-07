@@ -20,7 +20,7 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
 authLinks.get('/auth/links', authMiddleware, async (req, res) => {
     const userId = req.userId; // vem do token
     const links = await prisma.shortlink.findMany({
-        where: { fk_UserID: userId }
+        where: { fkUserId: userId }
     });
     return res.json(links);
 });

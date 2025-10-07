@@ -5,18 +5,18 @@ const userRoutes = Router();
 
 userRoutes.post('/users', async (req: Request, res: Response) => {
   try {
-    const { Name, Email, Password } = req.body;
+    const { name, email, password } = req.body;
     const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(Password, saltRounds);
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
     const user = await prisma.user.create({
-      data: { Name, Email, Password: hashedPassword, CreationDate: new Date() },
+      data: { name, email, password: hashedPassword, creationDate: new Date() },
     });
     res.json({
-      ID: user.ID,
-      Name: user.Name,
-      Email: user.Email,
-      Password: user.Password,
-      CreationDate: user.CreationDate
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      creationDate: user.creationDate
       });
   } catch (error) {
     res.status(500).json({ error: "Erro ao criar usuário" });
@@ -39,7 +39,7 @@ userRoutes.get('/user/:id', async (req: Request, res: Response) => {
     }
 
     const user = await prisma.user.findFirst({
-      where: { ID: id },
+      where: { id},
     });
 
     if (!user) {
@@ -52,15 +52,15 @@ userRoutes.get('/user/:id', async (req: Request, res: Response) => {
     res.status(500).json({ erro: "Erro interno no servidor" });
   }
 });
-userRoutes.put('/user/:ID', async (req: Request, res: Response) => {
+userRoutes.put('/user/:id', async (req: Request, res: Response) => {
   try {
-    const ID = parseInt(req.params.ID);
-    const {Name, Password} = req.body;
+    const id = parseInt(req.params.id);
+    const {name, password} = req.body;
     const user = await prisma.user.update({
-      where: {ID},
+      where: {id},
       data: {
-        Name,
-        Password
+        name,
+        password
     }
     });
     return res.json(user);
@@ -75,10 +75,10 @@ userRoutes.delete('/user/:id', async (req: Request, res: Response) => {
       return res.status(400).json({ erro: "ID inválido" });
     }
     await prisma.shortlink.deleteMany({
-        where: {fk_UserID: id}
+        where: {fkUserId: id}
     })
     const user = await prisma.user.delete({
-      where: { ID: id },
+      where: { id: id },
     });
     res.json(user);
   } catch (error) {

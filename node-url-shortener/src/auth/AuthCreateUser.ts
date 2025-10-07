@@ -9,7 +9,7 @@ AuthCreateUser.post("/auth/CreateAcount", async (req, res) => {
 
   try {
     const existingUser = await prisma.user.findUnique({
-      where: { Email: email },
+      where: { email},
     });
 
     if (existingUser) {
@@ -21,10 +21,10 @@ AuthCreateUser.post("/auth/CreateAcount", async (req, res) => {
 
     const user = await prisma.user.create({
       data: {
-        Name: name,
-        Email: email,
-        Password: hashedPassword,
-        CreationDate: new Date(),
+        name,
+        email,
+        password: hashedPassword,
+        creationDate: new Date(),
       },
     });
 

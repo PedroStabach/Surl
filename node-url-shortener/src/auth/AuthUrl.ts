@@ -8,16 +8,16 @@ const authLinks = Router();
 // Criar link curto
 authLinks.post("/auth/url", authMiddleware, async (req: Request, res: Response) => {
   try {
-    const { OriginalUrl } = req.body;
-    if (!OriginalUrl) return res.status(400).json({ error: "OriginalUrl é obrigatório" });
+    const { originalUrl } = req.body;
+    if (!originalUrl) return res.status(400).json({ error: "OriginalUrl é obrigatório" });
 
-    const ShortUrl = await generateRandomShortUrl(OriginalUrl);
+    const shortUrl = await generateRandomShortUrl(originalUrl);
 
     const newUrl = await prisma.shortlink.create({
       data: {
-        OriginalUrl,
-        ShortUrl,
-        fk_UserID: req.userId!, // vem do token
+        originalUrl,
+        shortUrl,
+        fkUserId: req.userId!, // vem do token
       },
     });
 
@@ -32,7 +32,7 @@ authLinks.post("/auth/url", authMiddleware, async (req: Request, res: Response) 
 authLinks.get("/auth/links", authMiddleware, async (req: Request, res: Response) => {
   try {
     const links = await prisma.shortlink.findMany({
-      where: { fk_UserID: req.userId },
+      where: { fkUserId: req.userId },
     });
     res.json(links);
   } catch (err) {

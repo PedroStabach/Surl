@@ -12,7 +12,7 @@ function convertToBase64(text: string): string {
 
 async function isShortUrlInUse(shortUrl: string): Promise<boolean> {
   const inUse = await prisma.shortlink.findFirst({
-    where: { ShortUrl: shortUrl },
+    where: { shortUrl },
   });
   return !!inUse;
 }

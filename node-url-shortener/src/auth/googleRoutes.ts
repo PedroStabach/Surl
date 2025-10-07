@@ -29,12 +29,12 @@ googleRoutes.get("/google/callback", async (req, res) => {
     const userData = userInfo.data as { email: string; name: string; picture: string; id: string };
 
     //verifica se o usuario ja existe no banco
-    let user = await prisma.user.findUnique({ where: { Email: userData.email } });
+    let user = await prisma.user.findUnique({ where: { email: userData.email } });
     if (!user) {
       user = await prisma.user.create({
         data: {
-          Email: userData.email,
-          Name: userData.name,
+          email: userData.email,
+          name: userData.name,
           avatar: userData.picture,
           googleId: userData.id,
         },
@@ -43,7 +43,7 @@ googleRoutes.get("/google/callback", async (req, res) => {
 
     //cria token do app
     const appToken = jwt.sign(
-      { id: user.ID, email: user.Email },
+      { id: user.id, email: user.email },
       process.env.JWT_SECRET as string,
       { expiresIn: "1d" }
     );

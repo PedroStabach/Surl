@@ -1,29 +1,34 @@
-import { Router } from "express";
-import prisma from "../prisma/prisma";
+import { Router, Request, Response } from "express";
 import * as bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import prisma from "../prisma/prisma";
 
 const loginRoutes = Router();
 
-loginRoutes.post("/auth/login", async (req, res) => {
+loginRoutes.post("/login", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
-    const user = await prisma.user.findUnique({ where: { Email: email } });
-    if (!user) return res.status(401).json({ error: "Usuário não encontrado" });
+    const user = await prisma.user.findUnique({ where: { email } });
 
-    const match = await bcrypt.compare(password, user.Password!);
-    if (!match) return res.status(401).json({ error: "Senha incorreta" });
+    if (!user || !user.password) {
+      return res.status(400).json({ error: "Email ou senha incorretos" });
+    }
 
-    const token = jwt.sign(
-      { userId: user.ID, email: user.Email },
-      process.env.JWT_SECRET!,
-      { expiresIn: "1d" }
-    );
+    const match = await bcrypt.compare(password, user.password);
 
-    res.json({ token, user });
-  } catch (err) {
-    res.status(500).json({ error: "Erro no servidor" });
+    if (!match) {
+      return res.status(400).json({ error: "Email ou senha incorretos" });
+    }
+
+    // exemplo de token ou resposta
+    res.json({
+      userId: user.id,
+      email: user.email,
+      name: user.name,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erro interno no servidor" });
   }
 });
 

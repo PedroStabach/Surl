@@ -6,13 +6,13 @@ const redirectRouter = Router();
 redirectRouter.get("/:shortUrl", async (req: Request, res: Response) => {
   try {
     const { shortUrl } = req.params;
-    const link = await prisma.shortlink.findFirst({ where: { ShortUrl: shortUrl } });
+    const link = await prisma.shortlink.findFirst({ where: { shortUrl } });
 
-    if (!link || !link.OriginalUrl) {
+    if (!link || !link.originalUrl) {
       return res.status(404).json({ error: "Link não encontrado" });
     }
 
-    return res.redirect(link.OriginalUrl);
+    return res.redirect(link.originalUrl);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Erro interno do servidor" });
