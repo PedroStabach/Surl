@@ -10,8 +10,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      contents: read
+      id-token: write    # Necessário para Login OIDC
+      contents: read     # Necessário para Checkout
 
     steps:
       # 1️⃣ Checkout do repositório
@@ -24,36 +24,34 @@ jobs:
         with:
           node-version: '22.x'
 
-      # 3️⃣ Instalar dependências (Necessário para rodar o 'build' e 'prisma')
+      # 3️⃣ Instalar dependências (no diretório do projeto)
       - name: Install dependencies
         working-directory: ./node-url-shortener
         run: npm install
 
       # 4️⃣ 🛠️ COMPILAR O TYPESCRIPT
+      # Cria a pasta 'dist' contendo os arquivos .js
       - name: Build TypeScript code
         working-directory: ./node-url-shortener
         run: npm run build
 
-      # 5️⃣ Executar Migrações do Prisma (Opcional, mas crucial se você usa DB)
-      # Nota: A variável DATABASE_URL deve estar configurada no Azure App Service
+      # 5️⃣ Executar Migrações do Prisma (CRUCIAL para preparar o DB)
+      # Nota: A variável DATABASE_URL deve ser configurada nos Secrets do GitHub ou no Azure.
       - name: Run Prisma Migrations
         working-directory: ./node-url-shortener
         run: npx prisma migrate deploy
-        env:
-          # Use o segredo do GitHub para a migração, se necessário, 
-          # ou confie no DB_URL do Azure (se já estiver configurado no Azure)
-          DATABASE_URL: ${{ secrets.AZUREAPPSERVICE_DATABASE_URL }}
+        # OPCIONAL: Se precisar usar a variável de DB do GitHub para a migração.
+        # env:
+        #   DATABASE_URL: ${{ secrets.DATABASE_URL_SECRETO }}
 
       # 6️⃣ 📦 CRIAR O ARQUIVO ZIP
+      # Empacota o diretório, excluindo 'node_modules', 'src' e '.git'.
       - name: Create Deployment Package (ZIP)
         working-directory: ./node-url-shortener
-        # Comando para criar o ZIP, excluindo pastas grandes/desnecessárias:
-        # -r : recursivo
-        # . : todos os arquivos no diretório atual
-        # -x : excluir
-        run: zip -r deploy.zip . -x "node_modules/*" -x ".git/*" -x "src/*" -x "*.zip"
+        # 'zip -r' cria o ZIP recursivamente, '.' aponta para o diretório atual
+        run: zip -r deploy.zip . -x "node_modules/*" -x "src/*" -x ".git/*" -x "*.zip"
 
-      # 7️⃣ Login no Azure
+      # 7️⃣ Login no Azure usando OIDC
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -67,5 +65,5 @@ jobs:
         with:
           app-name: 'surl'
           slot-name: 'Production'
-          # APONTE PARA O ARQUIVO ZIP CRIADO NA ETAPA 6
+          # Aponta diretamente para o arquivo ZIP criado
           package: ./node-url-shortener/deploy.zip
