@@ -1,4 +1,4 @@
-name: Build and deploy Node.js app to Azure Web App - surl
+name: Deploy Node.js app to Azure Web App - surl
 
 on:
   push:
@@ -9,12 +9,27 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # necessário para login OIDC
+      contents: read    # necessário para checkout
+
     steps:
-      # 1️⃣ Checkout do código
+      # 1️⃣ Checkout do repositório
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Login no Azure
+      # 2️⃣ Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.x'
+
+      # 3️⃣ Instalar dependências (opcional, Azure faz isso também)
+      - name: Install dependencies
+        working-directory: ./node-url-shortener
+        run: npm install
+
+      # 4️⃣ Login no Azure
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -22,16 +37,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_48BD8A498D9A4B378EFF9980053B7EA6 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_68D3C7022AF845C988A52B0E62970677 }}
 
-      # 3️⃣ Prepare o pacote para deploy (apenas arquivos da app)
-      - name: Zip application files
-        working-directory: ./node-url-shortener
-        run: |
-          zip -r deploy.zip * -x "node_modules/*" ".git/*" "tests/*"
-
-      # 4️⃣ Deploy para Azure
+      # 5️⃣ Deploy direto do diretório
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'surl'
           slot-name: 'Production'
-          package: ./node-url-shortener/deploy.zip
+          package: ./node-url-shortener
