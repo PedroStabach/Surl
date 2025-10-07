@@ -10,26 +10,41 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write   # necessário para login OIDC
-      contents: read    # necessário para checkout
+      id-token: write    # necessário para login OIDC
+      contents: read     # necessário para checkout
 
     steps:
       # 1️⃣ Checkout do repositório
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup Node.js
+      # 2️⃣ Setup Node.js (Garantir que a versão seja compatível com a do Azure)
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22.x'
+          cache: 'npm'
+          cache-dependency-path: './node-url-shortener/package-lock.json'
 
-      # 3️⃣ Instalar dependências (opcional, Azure faz isso também)
+      # 3️⃣ Instalar dependências
       - name: Install dependencies
         working-directory: ./node-url-shortener
         run: npm install
 
-      # 4️⃣ Login no Azure
+      # 4️⃣ 🛠️ COMPILAR O TYPESCRIPT (PASSO CRÍTICO)
+      # Isso gera a pasta 'dist' contendo o código JavaScript
+      - name: Build TypeScript code
+        working-directory: ./node-url-shortener
+        run: npm run build
+
+      # 5️⃣ Executar Migrações do Prisma (OPCIONAL, mas recomendado antes do deploy)
+      # Garante que o banco de dados esteja pronto.
+      # Nota: A variável DATABASE_URL deve estar configurada no Azure App Service
+      - name: Run Prisma Migrations
+        working-directory: ./node-url-shortener
+        run: npx prisma migrate deploy
+
+      # 6️⃣ Login no Azure
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -37,10 +52,11 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_48BD8A498D9A4B378EFF9980053B7EA6 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_68D3C7022AF845C988A52B0E62970677 }}
 
-      # 5️⃣ Deploy direto do diretório
+      # 7️⃣ Deploy para o Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'surl'
           slot-name: 'Production'
-          package: ./node-url-shortener
+          # APONTE PARA A PASTA COM O CÓDIGO COMPILADO!
+          package: ./node-url-shortener/dist
