@@ -4,25 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const prisma_1 = __importDefault(require("../prisma/prisma"));
+const userRoutes_1 = __importDefault(require("./userRoutes"));
+const linkRoutes_1 = __importDefault(require("./linkRoutes"));
+const authRoutes_1 = __importDefault(require("../auth/authRoutes"));
 const router = (0, express_1.Router)();
-router.post("/users", async (req, res) => {
-    try {
-        const { name, email } = req.body;
-        const user = await prisma_1.default.user.create({
-            data: { name, email, creationDate: new Date() },
-        });
-        res.json(user);
-    }
-    catch (error) {
-        res.status(500).json({ error: "Erro ao criar usuário" });
-    }
-});
-router.get('/users', (req, res) => {
-    try {
-    }
-    catch (error) {
-        res.status(500).json({ erro: "Erro ao criar usuario" });
-    }
-});
+//CRUD USER
+router.use(userRoutes_1.default);
+//CRUD LINK
+router.use(linkRoutes_1.default);
+//AUTH
+router.use(authRoutes_1.default);
 exports.default = router;

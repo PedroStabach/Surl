@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const loginRoutes_1 = __importDefault(require("./loginRoutes"));
+const googleRoutes_1 = __importDefault(require("./googleRoutes"));
+const validateTokenRoute_1 = __importDefault(require("./validateTokenRoute"));
+const authGoogle_1 = __importDefault(require("./authGoogle"));
+const AuthUrl_1 = __importDefault(require("./AuthUrl"));
+const authYourLinks_1 = __importDefault(require("./authYourLinks"));
+const AuthCreateUser_1 = __importDefault(require("./AuthCreateUser"));
+const authRoutes = (0, express_1.Router)();
+authRoutes.use(loginRoutes_1.default);
+authRoutes.use(googleRoutes_1.default);
+authRoutes.use(validateTokenRoute_1.default);
+authRoutes.use(authGoogle_1.default);
+authRoutes.use(AuthUrl_1.default);
+authRoutes.use(authYourLinks_1.default);
+authRoutes.use(AuthCreateUser_1.default);
+exports.default = authRoutes;
