@@ -8,16 +8,21 @@
     "dev": "npx nodemon --watch src --ext ts --exec \"npx ts-node src/service/app.ts\""
   },
   "dependencies": {
-    "express": "^5.1.0",
-    "cors": "^2.8.5",
+    "@prisma/client": "^6.16.3",
     "bcrypt": "^6.0.0",
-    "jsonwebtoken": "^9.0.2",
-    "@prisma/client": "^6.16.3"
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "google-auth-library": "^10.4.0",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
-    "typescript": "^5.9.2",
-    "ts-node": "^10.9.2",
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
     "nodemon": "^3.1.10",
-    "prisma": "^6.16.3"
+    "prisma": "^6.16.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
   }
 }
