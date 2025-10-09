@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dist-folder
-          path: ./node-url-shortener/dist
+          path: ./node-url-shortener
 
   deploy:
     runs-on: ubuntu-latest
