@@ -27,12 +27,34 @@ jobs:
           npm install
           npm run build
 
-      # Passo 4: Upload do build para o job de deploy
+      # ✅ Passo 4: Adicionar web.config à pasta dist
+      - name: Add web.config to dist
+        run: |
+          echo '<?xml version="1.0" encoding="utf-8"?>\
+          <configuration>\
+            <system.webServer>\
+              <handlers>\
+                <add name="iisnode" path="app.js" verb="*" modules="iisnode"/>\
+              </handlers>\
+              <rewrite>\
+                <rules>\
+                  <rule name="DynamicContent">\
+                    <conditions>\
+                      <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="True"/>\
+                    </conditions>\
+                    <action type="Rewrite" url="app.js"/>\
+                  </rule>\
+                </rules>\
+              </rewrite>\
+            </system.webServer>\
+          </configuration>' > ./node-url-shortener/dist/web.config
+
+      # Passo 5: Upload do build para o job de deploy
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: dist-folder
-          path: ./node-url-shortener
+          path: ./node-url-shortener/dist
 
   deploy:
     runs-on: ubuntu-latest
@@ -40,7 +62,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-
 
     steps:
       # Passo 1: Baixar artifact do job de build
@@ -62,6 +83,6 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'surl'            # Nome do seu Web App
+          app-name: 'surl'
           slot-name: 'Production'
-          package: ./dist              # Pasta com o JS compilado
+          package: ./dist
