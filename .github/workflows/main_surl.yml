@@ -78,6 +78,7 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID}}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID}}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+          auth-type: federated
 
       # Passo 3: Deploy para o Azure Web App
       - name: Deploy to Azure Web App
