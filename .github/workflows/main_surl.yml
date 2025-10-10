@@ -27,7 +27,7 @@ jobs:
           npm install
           npm run build
 
-      # ✅ Passo 4: Adicionar web.config à pasta dist
+      # Passo 4: Adicionar web.config à pasta dist
       - name: Add web.config to dist
         run: |
           echo '<?xml version="1.0" encoding="utf-8"?>\
@@ -71,14 +71,13 @@ jobs:
           name: dist-folder
           path: ./dist
 
-      # Passo 2: Login no Azure
+      # ✅ Passo 2: Login no Azure via OIDC (sem auth-type)
       - name: Azure Login
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
-          auth-type: federated
 
       # Passo 3: Deploy para o Azure Web App
       - name: Deploy to Azure Web App
