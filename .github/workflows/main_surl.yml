@@ -74,10 +74,9 @@ jobs:
       # Passo 2: Login no Azure
       - name: Azure Login
         uses: azure/login@v1
-  
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID}}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID}}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
           auth-type: federated
 
