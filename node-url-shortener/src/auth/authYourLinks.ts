@@ -10,8 +10,8 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
   if (!token) return res.status(401).json({ error: "Token não fornecido" });
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: number };
-    req.userId = decoded.userId;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
+    req.userId = decoded.id;
     next();
   } catch {
     return res.status(403).json({ error: "Token inválido" });

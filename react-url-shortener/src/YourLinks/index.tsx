@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import styles from './styles.module.css';
 interface Link {
   id: number;
-  OriginalUrl: string;
-  ShortUrl: string;
+  originalUrl: string;
+  shortUrl: string;
 }
 
 export function YourLinks() {
@@ -49,13 +49,13 @@ export function YourLinks() {
         {links.map((link) => (
           <li className={styles.card} key={link.id}>
             <strong>Original:</strong>{" "}
-            <a href={link.OriginalUrl} target="_blank" rel="noreferrer">
-              {link.OriginalUrl}
+            <a href={link.originalUrl} target="_blank" rel="noreferrer">
+              {link.originalUrl}
             </a>
             <br />
             <strong>Curto:</strong>{" "}
-            <a href={`http://localhost:3000/${link.ShortUrl}`} target="_blank" rel="noreferrer">
-              {`http://localhost:3000/${link.ShortUrl}`}
+            <a href={`http://localhost:3000/${link.shortUrl}`} target="_blank" rel="noreferrer">
+              {`http://localhost:3000/${link.shortUrl}`}
             </a>
           </li>
         ))}

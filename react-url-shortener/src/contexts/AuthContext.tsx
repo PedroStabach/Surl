@@ -43,7 +43,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
     localStorage.removeItem("authToken");
     // opcional: desconectar do Google
-    window.location.href = "https://accounts.google.com/Logout";
   };
 
   useEffect(() => {
