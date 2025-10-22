@@ -1,8 +1,11 @@
 import { Router, Request, Response } from "express";
 import * as bcrypt from "bcrypt";
 import prisma from "../prisma/prisma";
+import jwt from "jsonwebtoken";
 
 const loginRoutes = Router();
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 loginRoutes.post("/login", async (req: Request, res: Response) => {
   try {
@@ -20,8 +23,15 @@ loginRoutes.post("/login", async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Email ou senha incorretos" });
     }
 
-    // exemplo de token ou resposta
+    // gerar JWT
+    const token = jwt.sign(
+      { id: user.id, email: user.email, name: user.name },
+      JWT_SECRET!,
+      { expiresIn: "1h" }
+    );
+
     res.json({
+      token, // <- enviar o token para o frontend
       userId: user.id,
       email: user.email,
       name: user.name,

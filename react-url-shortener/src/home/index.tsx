@@ -10,7 +10,7 @@ export function Home () {
 
     async function handleUrl(e: React.FormEvent) {
     e.preventDefault();
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken');
     if (!token) {
         setError("Usuário não logado");
         return;
@@ -25,7 +25,7 @@ export function Home () {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify({ OriginalUrl }),
+            body: JSON.stringify({ originalUrl: OriginalUrl }),
         });
 
         if (!response.ok) {
@@ -34,7 +34,7 @@ export function Home () {
         }
 
         const data = await response.json();
-        setShortUrl(`http://localhost:3000/${data.ShortUrl}`);
+        setShortUrl(`http://localhost:3000/${data.shortUrl}`);
     } catch (err: any) {
         setError(err.message);
     }

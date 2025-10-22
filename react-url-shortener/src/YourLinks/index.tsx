@@ -12,7 +12,7 @@ export function YourLinks() {
 
   useEffect(() => {
     async function fetchLinks() {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("authToken");
       if (!token) {
         setError("Usuário não logado");
         return;
