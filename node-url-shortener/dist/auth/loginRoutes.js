@@ -39,7 +39,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const bcrypt = __importStar(require("bcrypt"));
 const prisma_1 = __importDefault(require("../prisma/prisma"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const loginRoutes = (0, express_1.Router)();
+const JWT_SECRET = process.env.JWT_SECRET;
 loginRoutes.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -51,8 +53,10 @@ loginRoutes.post("/login", async (req, res) => {
         if (!match) {
             return res.status(400).json({ error: "Email ou senha incorretos" });
         }
-        // exemplo de token ou resposta
+        // gerar JWT
+        const token = jsonwebtoken_1.default.sign({ id: user.id, email: user.email, name: user.name }, JWT_SECRET, { expiresIn: "1h" });
         res.json({
+            token, // <- enviar o token para o frontend
             userId: user.id,
             email: user.email,
             name: user.name,
