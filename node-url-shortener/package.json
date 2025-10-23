@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/app.js",
-    "dev": "npx nodemon --watch src --ext ts --exec \"npx ts-node src/service/app.ts\""
+    "dev": "npx nodemon --watch src --ext ts --exec \"npx ts-node src/service/app.ts\"",
+    "test": "echo No tests configured"
   },
   "dependencies": {
     "@prisma/client": "^6.16.3",
