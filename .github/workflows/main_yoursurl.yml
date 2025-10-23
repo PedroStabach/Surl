@@ -63,6 +63,6 @@ jobs:
       - name: Deploy backend to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'YourSurl'
+          app-name: 'yoursurl-ephteedeh5ddh3du'
           slot-name: 'Production'
           package: backend.zip
