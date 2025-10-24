@@ -1,10 +1,10 @@
 import './App.css';
-import { Footer } from './Footer';
-import { Header } from './Header';
+import { Footer } from './Footer/index';
+import { Header } from './Header/index';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Home } from './Home';
-import { YourLinks } from './YourLinks';
-import { CreateAccount } from './CreateAcount';
+import { Home } from './Home/index';
+import { YourLinks } from './YourLinks/index';
+import { CreateAccount } from './CreateAcount/index';
 
 function App() {
   return (
