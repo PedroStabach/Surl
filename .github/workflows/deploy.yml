@@ -33,8 +33,9 @@ jobs:
       id: package
       run: |
         cd node-url-shortener
-        zip -r ../app.zip .
-        echo "zip-path=$(pwd)/../app.zip" >> $GITHUB_OUTPUT
+        zip -r app.zip .
+        mv app.zip ${{ github.workspace }}/app.zip
+        echo "zip-path=${{ github.workspace }}/app.zip" >> $GITHUB_OUTPUT
 
   deploy:
     name: Deploy to Azure
