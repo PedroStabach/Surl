@@ -1,7 +1,7 @@
-import { Menu } from '../menu';
-import { Login } from '../login';
+import { Menu } from '../Menu';
+import { Login } from '../Login';
 import { useState } from 'react';
-import { MenuItem } from '../menu-itens';
+import { MenuItem } from '../MenuItem';
 import styles from './styles.module.css';
 import { LoginArea } from "../LoginArea";
 export function MenuMoba() {

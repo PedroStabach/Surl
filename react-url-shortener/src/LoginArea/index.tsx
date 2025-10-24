@@ -1,8 +1,8 @@
 // src/components/LoginArea.tsx
 import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { useAuth } from "../contexts/AuthContext";
-import GoogleLoginButton from "../googleLoginButton";
+import { useAuth } from "../Contexts/AuthContext";
+import GoogleLoginButton from "../GoogleLoginButton";
 import styles from "./styles.module.css";
 
 type LoginAreaProps = {

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { Menu } from '../menu';
-import { Login } from '../login';
+import { Menu } from '../Menu';
+import { Login } from '../Login';
 import { useState } from 'react';
-import { MenuItem } from '../menu-itens';
+import { MenuItem } from '../MenuItem';
 import styles from './styles.module.css';
 import logoImg from '../images/surl-icon.png';
 import { LoginArea } from '../LoginArea';

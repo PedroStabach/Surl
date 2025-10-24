@@ -1,5 +1,5 @@
 import styles from './styles.module.css';
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../Contexts/AuthContext";
 
 interface LoginProps {
   onLoginClick?: () => void; // deixei opcional para maior flexibilidade

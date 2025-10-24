@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { GenericMenu } from "../GenericMenu";
-import { MenuMoba } from "../menuMoba";
+import { MenuMoba } from "../MenuMoba";
 
 export function Header() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);

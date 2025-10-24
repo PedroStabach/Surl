@@ -1,8 +1,8 @@
 import './App.css';
-import { Footer } from './footer';
+import { Footer } from './Footer';
 import { Header } from './Header';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Home } from './home';
+import { Home } from './Home';
 import { YourLinks } from './YourLinks';
 import { CreateAccount } from './CreateAcount';
 

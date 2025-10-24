@@ -1,4 +1,4 @@
-import { Home } from "../home"
+import { Home } from "../Home"
 import { YourLinks } from "../YourLinks"
 
 export function Body() {
