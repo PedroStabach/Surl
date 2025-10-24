@@ -1,4 +1,4 @@
-name: Deploy Node.js app to Azure Web App
+name: Build and Deploy Node.js App to Azure
 
 on:
   push:
@@ -6,8 +6,11 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  build:
+    name: Build and Package
     runs-on: ubuntu-latest
+    outputs:
+      zip-path: ${{ steps.package.outputs.zip-path }}
 
     steps:
     - name: Checkout code
@@ -26,10 +29,26 @@ jobs:
       run: npm run build
       working-directory: ./node-url-shortener
 
-    - name: Deploy to Azure Web App
+    - name: Create ZIP package
+      id: package
+      run: |
+        cd node-url-shortener
+        zip -r ../app.zip .
+        echo "zip-path=$(pwd)/../app.zip" >> $GITHUB_OUTPUT
+
+  deploy:
+    name: Deploy to Azure
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy ZIP to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'Surls'
         slot-name: 'production'
-        package: './node-url-shortener
+        package: '${{ needs.build.outputs.zip-path }}'
         azure-rm-credentials: ${{ secrets.AZURE_CREDENTIALS }}
