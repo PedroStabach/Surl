@@ -23,14 +23,18 @@ jobs:
       run: npm install
       working-directory: ./node-url-shortener
 
+    - name: Generate Prisma Client
+      run: npx prisma generate
+      working-directory: ./node-url-shortener
+
     - name: Build project
       run: npm run build
       working-directory: ./node-url-shortener
 
-    - name: Create ZIP package
+    - name: Create ZIP package (inclui banco e .env)
       run: |
         cd node-url-shortener
-        zip -r app.zip .
+        zip -r app.zip . prisma/dev.db .env
         mv app.zip ${{ github.workspace }}/app.zip
 
     - name: Upload ZIP as artifact
