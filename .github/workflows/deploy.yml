@@ -9,8 +9,6 @@ jobs:
   build:
     name: Build and Package
     runs-on: ubuntu-latest
-    outputs:
-      zip-path: ${{ steps.package.outputs.zip-path }}
 
     steps:
     - name: Checkout code
@@ -30,12 +28,16 @@ jobs:
       working-directory: ./node-url-shortener
 
     - name: Create ZIP package
-      id: package
       run: |
         cd node-url-shortener
         zip -r app.zip .
         mv app.zip ${{ github.workspace }}/app.zip
-        echo "zip-path=${{ github.workspace }}/app.zip" >> $GITHUB_OUTPUT
+
+    - name: Upload ZIP as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: app-package
+        path: app.zip
 
   deploy:
     name: Deploy to Azure
@@ -45,6 +47,12 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+
+    - name: Download ZIP artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: app-package
+        path: .
 
     - name: Azure Login
       uses: azure/login@v1
@@ -56,4 +64,4 @@ jobs:
       with:
         app-name: 'Surls'
         slot-name: 'production'
-        package: '${{ needs.build.outputs.zip-path }}'
+        package: 'app.zip'
