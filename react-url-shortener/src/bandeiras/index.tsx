@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 export function Bandeiras () {
     const [language, setLanguage] = useState('BR');
-    const handleLanguage = (event) => {
+    const handleLanguage = (event : any) => {
         setLanguage(event.target.value.toUpperCase());
     }
     return (

@@ -1,4 +1,4 @@
-name: Build and Deploy Node.js App to Azure
+name: Build and Deploy Fullstack App to Azure
 
 on:
   push:
@@ -19,7 +19,17 @@ jobs:
       with:
         node-version: '22'
 
-    - name: Install dependencies
+    # Build frontend
+    - name: Install frontend dependencies
+      run: npm install
+      working-directory: ./react-url-shortener
+
+    - name: Build frontend
+      run: npm run build
+      working-directory: ./react-url-shortener
+
+    # Build backend
+    - name: Install backend dependencies
       run: npm install
       working-directory: ./node-url-shortener
 
@@ -27,15 +37,23 @@ jobs:
       run: npx prisma generate
       working-directory: ./node-url-shortener
 
-    - name: Build project
+    - name: Build backend
       run: npm run build
       working-directory: ./node-url-shortener
 
-    - name: Create ZIP package (inclui banco e .env)
+    # Prepare final package
+    - name: Create ZIP package (inclui frontend, backend, banco e .env)
       run: |
-        cd node-url-shortener
-        zip -r app.zip . prisma/dev.db .env
-        mv app.zip ${{ github.workspace }}/app.zip
+        mkdir packaged
+        cp -r node-url-shortener/dist packaged/
+        cp -r node-url-shortener/prisma packaged/prisma
+        cp node-url-shortener/.env packaged/
+        cp node-url-shortener/package.json packaged/
+        cp node-url-shortener/package-lock.json packaged/
+        cp -r react-url-shortener/dist packaged/frontend
+        cd packaged
+        zip -r ../app.zip .
+      shell: bash
 
     - name: Upload ZIP as artifact
       uses: actions/upload-artifact@v4

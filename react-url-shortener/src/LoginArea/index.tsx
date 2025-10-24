@@ -10,7 +10,7 @@ type LoginAreaProps = {
 };
 
 export function LoginArea({ onClose }: LoginAreaProps) {
-  const { login, loggedIn, user, logout } = useAuth();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
