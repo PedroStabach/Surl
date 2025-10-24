@@ -36,23 +36,23 @@ jobs:
         zip -r ../app.zip .
         echo "zip-path=$(pwd)/../app.zip" >> $GITHUB_OUTPUT
 
-     deploy:
-        name: Deploy to Azure
-        needs: build
-        runs-on: ubuntu-latest
+  deploy:
+    name: Deploy to Azure
+    needs: build
+    runs-on: ubuntu-latest
 
-        steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-        - name: Azure Login
-          uses: azure/login@v1
-          with:
-            creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-        - name: Deploy ZIP to Azure Web App
-          uses: azure/webapps-deploy@v2
-          with:
-            app-name: 'Surls'
-            slot-name: 'production'
-            package: '${{ needs.build.outputs.zip-path }}'
+    - name: Deploy ZIP to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'Surls'
+        slot-name: 'production'
+        package: '${{ needs.build.outputs.zip-path }}'
