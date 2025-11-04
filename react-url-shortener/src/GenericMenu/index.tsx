@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { Menu } from '../Menu';
-import { Login } from '../Login';
+import { Menu } from '../Menu/index.tsx';
+import { Login } from '../Login/index.tsx';
 import { useState } from 'react';
-import { MenuItem } from '../MenuItem';
+import { MenuItem } from '../MenuItem/index.tsx';
 import styles from './styles.module.css';
 import logoImg from '../images/surl-icon.png';
-import { LoginArea } from '../LoginArea';
+import { LoginArea } from '../LoginArea/index.tsx';
 
 export function GenericMenu() {
   const [showLogin, setShowLogin] = useState(false);

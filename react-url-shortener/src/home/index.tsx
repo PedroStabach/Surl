@@ -1,6 +1,6 @@
 import styles from './styles.module.css'
 import logo from '../images/surl-logo.png';
-import { Works } from '../works';
+import { Works } from '../works/index.tsx';
 import { useState } from 'react';
 
 export function Home () {

@@ -1,9 +1,9 @@
 import './App.css';
-import { Footer } from './Footer/index';
-import { Header } from './Header/index';
+import { Footer } from './Footer/index.tsx';
+import { Header } from './Header/index.tsx';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Home } from './Home/index';
-import { YourLinks } from './YourLinks/index';
+import { Home } from './Home/index.tsx';
+import { YourLinks } from './YourLinks/index.tsx';
 import { CreateAccount } from './CreateAcount/index';
 
 function App() {
