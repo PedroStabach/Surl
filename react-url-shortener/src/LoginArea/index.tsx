@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useAuth } from "../Contexts/AuthContext";
-import GoogleLoginButton from "../GoogleLoginButton";
+import GoogleLoginButton from "../GoogleLoginButton/index.tsx";
 import styles from "./styles.module.css";
 
 type LoginAreaProps = {
